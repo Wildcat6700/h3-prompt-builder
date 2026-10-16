@@ -53,6 +53,7 @@ html{scroll-padding-top:76px;scroll-padding-bottom:140px}.shell{padding-bottom:1
  <section id="handoffPanel" role="tabpanel" aria-labelledby="handoffTab" class="handoff" hidden><div class="card"><div class="cardhead"><h2>Portable handoff</h2><span class="badge">LIVE DATA</span></div><p class="sub">A current snapshot of the option library, your selections, reference notes, and complete prompt. Reference links are included only when you enter them.</p><label class="field">Handoff JSON<textarea id="handoffOutput" readonly spellcheck="false"></textarea></label><div class="toolbar"><button class="primary" id="copyHandoff">Copy handoff</button><button id="downloadHandoff">Download handoff</button></div><div id="handoffStatus" class="status" role="status" aria-live="polite"></div></div></section>
  <footer class="footer">Saved libraries work offline after their first load. JSON files are fetched only from this site when selected. No model calls or external code libraries. Your enabled workflows, selections, uploads and reference notes stay in this browser.</footer>
 </div>
+<dialog id="randomizeConfirmDialog" class="copy-dialog" aria-labelledby="randomizeConfirmTitle" aria-describedby="randomizeConfirmHelp"><div class="dialog-head"><h2 id="randomizeConfirmTitle">Randomize this prompt?</h2></div><p id="randomizeConfirmHelp" class="note">This will replace your current option selections. Cancel to keep the prompt you are working on. Your reference notes will stay.</p><div class="toolbar"><button id="cancelRandomize" type="button" autofocus>Cancel</button><button id="confirmRandomize" class="primary" type="button">Randomize</button></div></dialog>
 <dialog id="copyFallbackDialog" class="copy-dialog" aria-labelledby="copyFallbackTitle"><div class="dialog-head"><h2 id="copyFallbackTitle">Copy prompt</h2><button id="closeCopyFallback" type="button">Close</button></div><p class="note">Your browser could not copy automatically. Touch and hold the selected text, then choose Copy.</p><label class="sr-only" for="copyFallbackText">Prompt text to copy manually</label><textarea id="copyFallbackText" readonly spellcheck="false"></textarea></dialog>
 <nav class="action-dock" aria-label="Prompt actions"><div class="dock-inner"><span id="dockCurrent" class="sr-only">H3 Prompt Builder</span><span id="dockStatus" class="dock-feedback" role="status" aria-live="polite"></span><div class="dock-buttons"><button id="randomizePromptDock" type="button">Randomize</button><button id="copyPromptDock" class="primary" type="button">Copy prompt</button></div></div></nav>
 <script id="option-data" type="application/json">
@@ -417,7 +418,7 @@ async function setWorkflows(requested,options={}){
  finally{sourceBusy=false;renderSource();}
 }
 $('refreshWorkflows').onclick=()=>setWorkflows(workflowEnabled,{refresh:true});
-$('randomizePromptDock').onclick=()=>{if(sourceBusy||!library.groups.length)return;$('randomizePrompt').onclick();message('dockStatus','Randomized.');};
+$('randomizePromptDock').onclick=()=>requestRandomize();
 
 for(const key of inputKeys)$(key).addEventListener('input',()=>{const el=$(key);state[key]=el.type==='checkbox'?el.checked:el.type==='number'?Number(el.value):el.value;if(key==='secondSubject'&&!state.secondSubject){if(state.outfitTarget==='second')state.outfitTarget='primary';for(const g of library.groups)state.selections[g.id]=(state.selections[g.id]||[]).filter(id=>g.options.find(o=>o.id===id)?.requiresSubjects!==2)}state=normalizeState(state,library);if(el.type==='checkbox'||key==='outfitTarget'){renderInputs()}renderGroups();renderOutput();persist()});
 function tab(which){const handoff=which==='handoff';$('builderPanel').hidden=handoff;$('handoffPanel').hidden=!handoff;for(const name of ['builder','handoff']){const active=name===which;$(name+'Tab').setAttribute('aria-selected',String(active));$(name+'Tab').tabIndex=active?0:-1}renderOutput()}
@@ -425,8 +426,8 @@ $('builderTab').onclick=()=>tab('builder');$('handoffTab').onclick=()=>tab('hand
 function download(name,content,type='text/plain;charset=utf-8'){const url=URL.createObjectURL(new Blob([content],{type})),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),3000)}
 async function copy(text,field,status){try{if(!navigator.clipboard?.writeText)throw Error('Clipboard API unavailable');await navigator.clipboard.writeText(text);message(status,'Copied.')}catch(e){if(field==='promptOutput'){ $('copyFallbackText').value=text;openDialog('copyFallbackDialog');$('copyFallbackText').focus();$('copyFallbackText').select();message(status,'Select text to copy.');}else{$(field).focus();$(field).select();message(status,'Copy is unavailable here. The text is selected; use your device’s Copy command or Download.')}}}
 
-function closeDialog(id){const dialog=$(id);if(typeof dialog.close==='function')dialog.close();else dialog.hidden=true;}
-function openDialog(id){const dialog=$(id);if(typeof dialog.showModal==='function'){if(!dialog.open)dialog.showModal();}else dialog.hidden=false;}
+function closeDialog(id){const dialog=$(id);if(typeof dialog.close==='function')dialog.close();else{dialog.removeAttribute('open');dialog.hidden=true;}}
+function openDialog(id){const dialog=$(id);if(typeof dialog.showModal==='function'){if(!dialog.open)dialog.showModal();}else{dialog.hidden=false;dialog.setAttribute('open','');}}
 $('closeCopyFallback').onclick=()=>closeDialog('copyFallbackDialog');
 $('copyPromptDock').onclick=()=>copy(buildPrompt(state,library).text,'promptOutput','dockStatus');
 
@@ -439,11 +440,16 @@ $('jsonFile').onchange=async event=>{const file=event.target.files?.[0];if(!file
  if(sourceBusy)throw Error('Wait for workflows to finish loading.');if(file.size>1048576)throw Error('Use a JSON file smaller than 1 MiB.');const parsed=Libraries.parseLibraryText(await file.text()),imported=Libraries.adaptPack(parsed.value,'uploaded');const merged=workflowCache.saved?.groups.length?mergePack(workflowCache.saved,imported):validatePack(imported);const ok=await setWorkflows([...workflowEnabled,'saved'],{savedPack:merged,recoveredEOF:parsed.recoveredEOF||workflowRecovered.saved});if(ok)message('importStatus','Options added to My uploads. Enable or disable them with its workflow toggle.');else message('importStatus','The upload could not be applied; your current workflows were kept.',true);
  }catch{message('importStatus','Import rejected. Use a supported JSON library under 1 MiB. Your workflows and choices were kept.',true);}finally{event.target.value='';}};
 
-$('randomizePrompt').onclick=()=>{
- if(sourceBusy)return;const hadSecond=state.secondSubject;state=randomizeState(state,library);renderAll();persist();
+function applyConfirmedRandomize(){
+ if(sourceBusy||!library.groups.length)return;const hadSecond=state.secondSubject;state=randomizeState(state,library);renderAll();persist();
  const selected=library.groups.filter(g=>state.selections[g.id]?.length).length;
  message('randomizeStatus','Randomized '+library.groups.length+' categories: '+selected+' selected, '+(library.groups.length-selected)+' None. Reference notes kept.'+(!hadSecond&&state.secondSubject?' Second subject enabled; add its original reference before generation.':''));
-};
+ message('dockStatus','Randomized.');
+}
+function requestRandomize(){if(sourceBusy||!library.groups.length)return;openDialog('randomizeConfirmDialog');$('cancelRandomize').focus();}
+$('randomizePrompt').onclick=requestRandomize;
+$('cancelRandomize').onclick=()=>closeDialog('randomizeConfirmDialog');
+$('confirmRandomize').onclick=()=>{if(!$('randomizeConfirmDialog').open)return;closeDialog('randomizeConfirmDialog');applyConfirmedRandomize();};
 $('resetChoices').onclick=()=>{const fresh=freshState(library);for(const key of inputKeys)fresh[key]=state[key];fresh.selections=freshState(library).selections;fresh.microMotion=true;fresh.beats=true;fresh.noOverlays=false;state=normalizeState(fresh,library);renderAll();persist();message('actionStatus','Choices reset; reference notes kept.')};
 
 let outfitAsset=null,outfitAssetBusy=true,outfitSessionOnly=false,outfitAssetError='';
