@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "name": "Camera and weather additions",
+  "groups": [
+    {
+      "id": "camera",
+      "label": "Camera movement",
+      "target": "detailed_description",
+      "multi": false,
+      "options": [
+        {
+          "id": "slow-crane-rise",
+          "label": "Slow crane rise",
+          "text": "The camera rises gradually on a smooth crane path, revealing more of the reference environment while keeping the subject in frame."
+        }
+      ]
+    },
+    {
+      "id": "weather",
+      "label": "Weather accents",
+      "target": "detailed_description",
+      "multi": true,
+      "order": 65,
+      "options": [
+        {
+          "id": "gentle-breeze",
+          "label": "Gentle breeze",
+          "text": "A gentle breeze moves loose fabric and nearby foliage subtly, without changing the subject or scene."
+        }
+      ]
+    }
+  ]
+}
