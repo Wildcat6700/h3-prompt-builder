@@ -18,6 +18,8 @@
  <nav class="tabs" role="tablist" aria-label="Workspace"><button id="builderTab" role="tab" aria-selected="true" aria-controls="builderPanel" tabindex="0">BUILDER</button><button id="handoffTab" role="tab" aria-selected="false" aria-controls="handoffPanel" tabindex="-1">HANDOFF</button></nav>
  <main id="builderPanel" role="tabpanel" aria-labelledby="builderTab" class="layout">
  <div class="stack">
+  <section class="card" id="libraryPicker"><div class="cardhead"><h2>JSON libraries</h2><span class="badge">SWITCH ANYTIME</span></div><label class="field" for="librarySource">Choose JSON library</label><select id="librarySource" aria-describedby="librarySourceHelp"><option value="saved">My saved library</option><option value="original">Original options</option><option value="instagram">Original + Instagram</option><option value="xprompt">Original + XPROMPT</option><option value="combined">Original + Instagram + XPROMPT</option><option value="example">Original + example additions</option></select><div class="librarybar" style="margin-top:12px"><button id="reloadSource" type="button">Update selected JSON</button></div><p class="note" id="librarySourceHelp">Original options are included in every view. Each view remembers its choices; switching keeps your saved libraries and reference notes. Upload JSON adds to My saved library. Hosted files load only when selected, then stay cached on this device.</p><div id="libraryStatus" class="status" role="status" aria-live="polite"></div></section>
+
   <section class="card"><div class="cardhead"><h2><span class="number">01</span>References & scene</h2><span class="badge" id="referenceCount"></span></div><p class="note">Reference order: subjects first, then a separate environment image. Links are notes only; this page does not fetch or upload media.</p>
    <div class="reference"><label class="field">Picture 1 · primary subject<input id="subjectA" type="text" maxlength="240" placeholder="the main character" autocomplete="off"></label><label class="field">Original image link<input id="imageAUrl" type="url" placeholder="https://drive.google.com/…" autocomplete="off"></label></div>
    <label class="toggle"><input id="secondSubject" type="checkbox">Add a second subject reference</label>
@@ -29,12 +31,12 @@
   </section>
   <section class="card"><div class="cardhead"><h2><span class="number">02</span>Direction</h2><button id="resetChoices" type="button">Reset choices</button></div><label class="toggle"><input id="microMotion" type="checkbox">Natural micro-movement throughout</label><label class="toggle"><input id="beats" type="checkbox">Include beginning / middle / ending beats</label><label class="toggle"><input id="noOverlays" type="checkbox">No added watermarks, captions, or overlays</label></section>
   <div class="eyebrow" style="padding:5px 4px 0">Shape the performance & camera</div><div id="groups" class="stack"></div>
-  <section class="card"><div class="cardhead"><h2><span class="number">03</span>Option library</h2><span class="badge">JSON</span></div><p class="note">Add non-explicit scene, camera, performance, and sound options. Imports stay in this browser and merge into the current library.</p><div class="librarybar"><button id="importOptions">Upload JSON</button><button id="downloadTemplate">Example JSON</button><a class="button instagram-pack" id="downloadInstagramPack" href="instagram-prompt-creator.json" download="Instagram Prompt Creator - Additive v1.json">Instagram Prompt Creator JSON</a><button id="exportLibrary">Export library</button><button id="restoreLibrary">Restore defaults</button><input id="jsonFile" type="file" accept=".json,application/json" hidden></div><p class="note" id="instagramPackHelp">Download Instagram Prompt Creator JSON, then use Upload JSON to add its choices. Existing options and selections stay. New choices start at None. Choose one format and relevant actions; transitions, edits and captions marked finishing are plans for your editor.</p><p class="library-info" id="libraryInfo"></p><div id="importStatus" class="status" role="status" aria-live="polite"></div></section>
+  <section class="card"><div class="cardhead"><h2><span class="number">03</span>Option library</h2><span class="badge">JSON</span></div><p class="note">Add scene, camera, performance, and sound options. Uploads merge additively into My saved library and stay in this browser. Use JSON libraries above to switch hosted files.</p><div class="librarybar"><button id="importOptions">Upload JSON</button><button id="downloadTemplate">Example JSON</button><a class="button instagram-pack" id="downloadInstagramPack" href="instagram-prompt-creator.json" download="Instagram Prompt Creator - Additive v1.json">Instagram Prompt Creator JSON</a><button id="exportLibrary">Export library</button><button id="restoreLibrary">Original options</button><input id="jsonFile" type="file" accept=".json,application/json" hidden></div><p class="note" id="instagramPackHelp">Select Original + Instagram above to load directly, or download the JSON and use Upload JSON. Existing options and selections stay. New choices start at None. Choose one format and relevant actions; transitions, edits and captions marked finishing are plans for your editor.</p><p class="library-info" id="libraryInfo"></p><div id="importStatus" class="status" role="status" aria-live="polite"></div></section>
  </div>
  <aside class="preview" id="preview"><section class="card"><div class="previewtop"><h2>Live prompt</h2><span class="badge">6 FIELDS</span></div><div class="previewbody"><label class="sr-only" for="promptOutput">Complete generated prompt</label><textarea id="promptOutput" readonly spellcheck="false"></textarea><div class="count" id="promptCount"></div><div class="toolbar"><button class="primary" id="copyPrompt">Copy prompt</button><button id="downloadPrompt">Download .txt</button><button id="sharePrompt">Share</button></div><div id="actionStatus" class="status" role="status" aria-live="polite"></div></div><div class="previewfoot">Prompt construction only. Reference retention and precise movement still depend on the model and workflow. Review the exact prompt and original inputs before generation.</div></section></aside>
  </main>
  <section id="handoffPanel" role="tabpanel" aria-labelledby="handoffTab" class="handoff" hidden><div class="card"><div class="cardhead"><h2>Portable handoff</h2><span class="badge">LIVE DATA</span></div><p class="sub">A current snapshot of the option library, your selections, reference notes, and complete prompt. Reference links are included only when you enter them.</p><label class="field">Handoff JSON<textarea id="handoffOutput" readonly spellcheck="false"></textarea></label><div class="toolbar"><button class="primary" id="copyHandoff">Copy handoff</button><button id="downloadHandoff">Download handoff</button></div><div id="handoffStatus" class="status" role="status" aria-live="polite"></div></div></section>
- <footer class="footer">Works offline after saving this HTML file. No accounts, model calls, or external libraries in the app. Your settings are saved on this device when browser storage is available.</footer>
+ <footer class="footer">Saved libraries work offline after their first load. JSON files are fetched only from this site when selected. No model calls or external code libraries. Your selections, uploads and reference notes stay in this browser.</footer>
 </div>
 <script id="option-data" type="application/json">
 {"version":1,"name":"H3 everyday direction","groups":[
@@ -53,6 +55,90 @@
 {"id":"music","label":"Music","target":"non_diegetic_music","order":210,"default":["none"],"options":[{"id":"none","label":"No music","text":"No non-diegetic music."},{"id":"ambient","label":"Soft ambient","text":"A restrained instrumental ambient bed supports the scene without overpowering environmental sound; no lyrics."},{"id":"acoustic","label":"Light acoustic","text":"A quiet, simple acoustic instrumental bed with a steady understated rhythm; no lyrics."}]},
 {"id":"details","label":"Continuity details","target":"detailed_description","order":160,"multi":true,"default":["identity","geometry"],"options":[{"id":"identity","label":"Identity continuity","text":"Keep facial structure, hair, wardrobe, and subject identity consistent from beginning to end."},{"id":"geometry","label":"Stable geometry","text":"Preserve stable hands, limbs, object shapes, and background geometry across frames."},{"id":"contact","label":"Believable contact","text":"Keep footfalls, seated support, and object contact physically coherent; avoid sliding or floating."}]}
 ]}
+</script>
+<script id="library-code">
+(()=>{'use strict';
+const SOURCES=[
+ {id:'saved',label:'My saved library',files:[]},
+ {id:'original',label:'Original options',files:[]},
+ {id:'instagram',label:'Original + Instagram',files:['instagram-prompt-creator.json']},
+ {id:'xprompt',label:'Original + XPROMPT',files:['XPROMPT.json']},
+ {id:'combined',label:'Original + Instagram + XPROMPT',files:['instagram-prompt-creator.json','XPROMPT.json']},
+ {id:'example',label:'Original + example additions',files:['example-options.json']}
+];
+const allowed=new Set(SOURCES.flatMap(s=>s.files));
+const isObject=x=>x&&typeof x==='object'&&!Array.isArray(x);
+const safeText=(x,fallback,max=100)=>typeof x==='string'&&x.trim()?x.replace(/[\r\n\t]+/g,' ').trim().slice(0,max):fallback;
+const hash=x=>{let h=2166136261;for(const c of String(x))h=Math.imul(h^c.charCodeAt(0),16777619);return(h>>>0).toString(36)};
+const ignored=new Set(['version','name','title','description','metadata','notes','sources','research_sources','usage_notes','format','state','referenceOrder','generationSubmitted']);
+function adaptPack(raw,namespace='uploaded'){
+ if(isObject(raw)&&raw.version===1&&Array.isArray(raw.groups))return raw;
+ if(isObject(raw?.library)&&raw.library.version===1&&Array.isArray(raw.library.groups))return raw.library;
+ let container=raw;
+ if(isObject(raw))for(const key of ['categories','groups','library','options','prompts']){
+  if(Array.isArray(raw[key])||isObject(raw[key])){container=raw[key];break}
+ }
+ let entries;
+ const optionList=value=>Array.isArray(value)?value:isObject(value)?(['options','prompts','items','values'].map(k=>value[k]).find(Array.isArray)||null):null;
+ if(Array.isArray(container)){
+  const looksGrouped=container.length&&container.every(v=>isObject(v)&&optionList(v));
+  entries=looksGrouped?container.map((v,i)=>[safeText(v.label||v.name||v.title||v.category||v.id,'Category '+(i+1)),v]):[['Options',container]];
+ }else if(isObject(container)){
+  entries=Object.entries(container).filter(([key,value])=>!ignored.has(key)&&(optionList(value)||isObject(value)));
+ }else throw Error('Unsupported library layout.');
+ const groupIds=new Set();
+ const groups=entries.map(([name,value],index)=>{
+  let list=optionList(value);
+  if(!list&&isObject(value))list=Object.entries(value).filter(([k,v])=>!ignored.has(k)&&typeof v==='string').map(([label,text])=>({label,text}));
+  if(!list?.length)throw Error('A category has no usable options.');
+  const id='file-'+namespace+'-'+hash(name);if(groupIds.has(id))throw Error('Category names must be unique.');groupIds.add(id);
+  const optionIds=new Set();
+  const options=list.map((item,i)=>{
+   let text,label;
+   if(typeof item==='string'){text=item;label=item}
+   else if(isObject(item)){
+    text=[item.text,item.prompt,item.description,item.value,item.content].find(v=>typeof v==='string'&&v.trim());
+    label=item.label||item.name||item.title||item.id||text;
+   }
+   if(typeof text!=='string'||!text.trim())throw Error('An option needs prompt text.');
+   const cleanLabel=safeText(label,'Option '+(i+1));let oid='item-'+hash(cleanLabel);
+   if(optionIds.has(oid))oid+='-'+(i+1);optionIds.add(oid);
+   const option={id:oid,label:cleanLabel,text};
+   if(isObject(item)&&item.requiresSubjects===2)option.requiresSubjects=2;
+   return option;
+  });
+  const target=isObject(value)&&['detailed_description','overall_soundscape','non_diegetic_music'].includes(value.target)?value.target:'detailed_description';
+  return{id,label:safeText(name,'Category '+(index+1)),target,multi:isObject(value)&&value.multi===true,order:150,default:[],options};
+ });
+ return{version:1,name:safeText(raw?.name||raw?.title,'Imported JSON library'),groups};
+}
+function assemble(api,builtin,packs,existing=null){
+ let next=api.validatePack(existing||builtin);
+ for(const pack of packs)next=api.mergePack(next,pack);
+ return next;
+}
+function compatibleSelections(selections,library){
+ const result={};for(const group of library.groups){const old=selections?.[group.id];if(!Array.isArray(old))continue;
+  const valid=old.filter(id=>group.options.some(o=>o.id===id));result[group.id]=old.length&&!valid.length?(group.default||[]):valid;
+ }return result;
+}
+async function loadPacks(sourceId,fetcher=globalThis.fetch){
+ const source=SOURCES.find(s=>s.id===sourceId);if(!source)throw Error('Unknown library.');
+ const packs=[];
+ for(const file of source.files){
+  if(!allowed.has(file))throw Error('Unknown JSON file.');
+  const response=await fetcher(file,{credentials:'omit',cache:'no-cache',referrerPolicy:'no-referrer'});
+  if(!response.ok)throw Error('JSON download unavailable.');
+  const text=await response.text();
+  if(new TextEncoder().encode(text).length>1048576)throw Error('JSON file exceeds import limit.');
+  let raw;try{raw=JSON.parse(text.replace(/^\uFEFF/,''))}catch{throw Error('File is not valid JSON.')}
+  const namespace=file==='XPROMPT.json'?'xprompt':file==='example-options.json'?'example':'instagram';
+  packs.push(adaptPack(raw,namespace));
+ }
+ return packs;
+}
+globalThis.H3Libraries={SOURCES,adaptPack,assemble,compatibleSelections,loadPacks};
+})();
 </script>
 <script id="app-code">
 (()=>{'use strict';
@@ -127,16 +213,36 @@ function buildPrompt(state,library){
 function makeHandoff(state,library){const s=normalizeState(state,library);return{format:'h3-prompt-builder-handoff',version:1,mode:'Ref2VA',library:clone(library),state:s,referenceOrder:[{role:'primary subject',label:'<Picture 1>',originalUrl:s.imageAUrl},...(s.secondSubject?[{role:'second subject',label:'<Picture 2>',originalUrl:s.imageBUrl}]:[]),...(s.separateEnvironment?[{role:'environment',label:'<Picture '+(s.secondSubject?3:2)+'>',originalUrl:s.environmentUrl}]:[]),...(s.useMotion?[{role:'broad motion',label:'<Video 1>',originalUrl:s.motionUrl}]:[])],prompt:buildPrompt(s,library),generationSubmitted:false}}
 const API={FIELDS,validatePack,mergePack,freshState,normalizeState,selectOption,buildPrompt,makeHandoff};globalThis.H3Builder=API;
 if(typeof document==='undefined')return;
-const $=id=>document.getElementById(id),KEY='wildcat-h3-builder-v1';let library,state,builtin,storageOK=true;
+const $=id=>document.getElementById(id),KEY='wildcat-h3-builder-v1',Libraries=globalThis.H3Libraries;let library,state,builtin,storageOK=true,activeSource='saved',profiles=Object.create(null),sourceBusy=false;
 try{builtin=validatePack(JSON.parse($('option-data').textContent));library=clone(builtin);state=freshState(library)}catch(e){$('actionStatus').textContent='Built-in option data could not be parsed. '+e.message;return}
-try{const saved=JSON.parse(localStorage.getItem(KEY)||'null');if(saved){library=validatePack(saved.library);state=normalizeState(saved.state,library)}}catch(e){storageOK=false;$('actionStatus').textContent='Saved data could not be loaded; defaults are active. You can still copy and download.'}
+try{const saved=JSON.parse(localStorage.getItem(KEY)||'null');if(saved){library=validatePack(saved.library);state=normalizeState(saved.state,library);if(saved.profiles&&typeof saved.profiles==='object')for(const source of Libraries.SOURCES){const p=saved.profiles[source.id];if(p)try{const l=validatePack(p.library);profiles[source.id]={library:l,selections:normalizeState({selections:p.selections},l).selections}}catch{}}if(Libraries.SOURCES.some(s=>s.id===saved.activeSource)&&profiles[saved.activeSource])activeSource=saved.activeSource;}}catch(e){storageOK=false;$('actionStatus').textContent='Saved data could not be loaded; defaults are active. You can still copy and download.'}
+if(!profiles.saved)profiles.saved={library:clone(library),selections:clone(state.selections)};
 const inputKeys=['subjectA','subjectB','secondSubject','separateEnvironment','environmentName','useMotion','imageAUrl','imageBUrl','environmentUrl','motionUrl','duration','scene','microMotion','beats','noOverlays'];
-function persist(){try{localStorage.setItem(KEY,JSON.stringify({library,state}));storageOK=true}catch(e){storageOK=false}$('saveBadge').textContent=storageOK?'Saved on this device':'Session only'}
+function persist(){profiles[activeSource]={library:clone(library),selections:clone(state.selections)};try{localStorage.setItem(KEY,JSON.stringify({library,state,activeSource,profiles}));storageOK=true}catch(e){storageOK=false}$('saveBadge').textContent=storageOK?'Saved on this device':'Session only'}
 function message(id,text,error=false){$(id).textContent=text;$(id).classList.toggle('error',error)}
 function renderInputs(){for(const key of inputKeys){const el=$(key);if(el.type==='checkbox')el.checked=state[key];else el.value=state[key]}$('secondFields').hidden=!state.secondSubject;$('environmentFields').hidden=!state.separateEnvironment;$('motionFields').hidden=!state.useMotion;$('environmentLabel').textContent='Picture '+(state.secondSubject?3:2)+' · environment';$('referenceCount').textContent=(1+(state.secondSubject?1:0)+(state.separateEnvironment?1:0))+' IMAGE'+(state.secondSubject||state.separateEnvironment?'S':'')+(state.useMotion?' + VIDEO':'')}
 function renderGroups(){const focused=document.activeElement?.dataset?.focusKey;const open=new Set([...document.querySelectorAll('#groups details[open]')].map(d=>d.dataset.id));const first=!$('groups').children.length;$('groups').replaceChildren();for(const g of library.groups){const d=document.createElement('details');d.className='optiongroup';d.dataset.id=g.id;d.open=first?['action','camera','framing'].includes(g.id):open.has(g.id);const summary=document.createElement('summary'),title=document.createElement('span'),meta=document.createElement('span');title.textContent=g.label;meta.className='group-meta';meta.textContent=(state.selections[g.id]||[]).map(id=>g.options.find(o=>o.id===id)?.label).filter(Boolean).join(', ')||'None';summary.append(title,meta);d.append(summary);const chips=document.createElement('div');chips.className='chips';const add=(id,label,selected,needs)=>{const b=document.createElement('button');b.type='button';b.dataset.focusKey=g.id+':'+(id===null?'clear':'option:'+id);b.className='chip'+(needs?' needs':'');b.textContent=label;b.setAttribute('aria-pressed',String(selected));if(needs)b.title='Adds a second subject reference automatically';b.addEventListener('click',()=>{const hadSecond=state.secondSubject;state=selectOption(state,library,g.id,id);renderAll();persist();if(!hadSecond&&state.secondSubject)message('actionStatus','Second subject enabled. Add its original reference before generation.');});chips.append(b)};add(null,'None',!(state.selections[g.id]||[]).length,false);for(const o of g.options)add(o.id,o.label,state.selections[g.id]?.includes(o.id),o.requiresSubjects===2&&!state.secondSubject);d.append(chips);$('groups').append(d)}if(focused){const replacement=[...$('groups').querySelectorAll('button')].find(b=>b.dataset.focusKey===focused);replacement?.focus({preventScroll:true})}}
 function renderOutput(){const prompt=buildPrompt(state,library);$('promptOutput').value=prompt.text;$('promptCount').textContent=prompt.text.length.toLocaleString()+' characters · 6 fields';$('handoffOutput').value=JSON.stringify(makeHandoff(state,library),null,2);$('libraryInfo').textContent=library.groups.length+' groups · '+library.groups.reduce((n,g)=>n+g.options.length,0)+' options. Importing matching IDs updates those options; other IDs are appended.'}
-function renderAll(){renderInputs();renderGroups();renderOutput()}
+function renderSource(){$('librarySource').value=activeSource;$('librarySource').disabled=sourceBusy;$('reloadSource').disabled=sourceBusy||!Libraries.SOURCES.find(s=>s.id===activeSource)?.files.length}
+function renderAll(){renderInputs();renderGroups();renderOutput();renderSource()}
+async function switchLibrary(sourceId,refresh=false){
+ if(sourceBusy)return;const source=Libraries.SOURCES.find(s=>s.id===sourceId);if(!source)return;
+ persist();sourceBusy=true;renderSource();message('libraryStatus','Loading '+source.label+'...');
+ try{
+  let next;
+  if(sourceId==='original')next=clone(builtin);
+  else if(profiles[sourceId]&&!refresh)next=clone(profiles[sourceId].library);
+  else if(sourceId==='saved')next=clone(builtin);
+  else next=Libraries.assemble(API,builtin,await Libraries.loadPacks(sourceId),refresh?profiles[sourceId]?.library:null);
+  const choices=profiles[sourceId]?.selections||Libraries.compatibleSelections(state.selections,next);
+  const nextState=normalizeState({...state,selections:choices},next);
+  activeSource=sourceId;library=next;state=nextState;renderAll();persist();
+  message('libraryStatus',source.label+' loaded. '+library.groups.reduce((n,g)=>n+g.options.length,0)+' options; original options included.');
+ }catch{message('libraryStatus','Could not load this JSON library. Check the connection and file format. Your current library and choices were kept.',true)}
+ finally{sourceBusy=false;renderSource()}
+}
+$('librarySource').onchange=event=>switchLibrary(event.target.value);
+$('reloadSource').onclick=()=>switchLibrary(activeSource,true);
 for(const key of inputKeys)$(key).addEventListener('input',()=>{const el=$(key);state[key]=el.type==='checkbox'?el.checked:el.type==='number'?Number(el.value):el.value;if(key==='secondSubject'&&!state.secondSubject){for(const g of library.groups)state.selections[g.id]=(state.selections[g.id]||[]).filter(id=>g.options.find(o=>o.id===id)?.requiresSubjects!==2)}if(el.type==='checkbox'){renderInputs();renderGroups()}renderOutput();persist()});
 function tab(which){const handoff=which==='handoff';$('builderPanel').hidden=handoff;$('handoffPanel').hidden=!handoff;for(const name of ['builder','handoff']){const active=name===which;$(name+'Tab').setAttribute('aria-selected',String(active));$(name+'Tab').tabIndex=active?0:-1}renderOutput()}
 $('builderTab').onclick=()=>tab('builder');$('handoffTab').onclick=()=>tab('handoff');for(const name of ['builder','handoff'])$(name+'Tab').addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();const next=e.key==='Home'?'builder':e.key==='End'?'handoff':name==='builder'?'handoff':'builder';tab(next);$(next+'Tab').focus()}});
@@ -146,9 +252,9 @@ $('copyPrompt').onclick=()=>copy(buildPrompt(state,library).text,'promptOutput',
 $('copyHandoff').onclick=()=>copy(JSON.stringify(makeHandoff(state,library),null,2),'handoffOutput','handoffStatus');$('downloadHandoff').onclick=()=>download('H3-handoff.json',JSON.stringify(makeHandoff(state,library),null,2),'application/json');
 const example={version:1,name:'Example camera additions',groups:[{id:'camera',label:'Camera movement',target:'detailed_description',multi:false,options:[{id:'slow-crane-rise',label:'Slow crane rise',text:'The camera rises gradually on a smooth crane path, revealing more of the reference environment while keeping the subject in frame.'}]},{id:'weather',label:'Weather accents',target:'detailed_description',multi:true,order:65,options:[{id:'gentle-breeze',label:'Gentle breeze',text:'A gentle breeze moves loose fabric and nearby foliage subtly, without changing the subject or scene.'}]}]};
 $('downloadTemplate').onclick=()=>download('H3-example-options.json',JSON.stringify(example,null,2),'application/json');$('exportLibrary').onclick=()=>download('H3-option-library.json',JSON.stringify(library,null,2),'application/json');$('importOptions').onclick=()=>$('jsonFile').click();
-$('jsonFile').onchange=async event=>{const file=event.target.files?.[0];if(!file)return;try{if(file.size>1048576)throw Error('Use a JSON file smaller than 1 MiB.');const imported=JSON.parse((await file.text()).replace(/^\uFEFF/,''));const merged=mergePack(library,imported);state=normalizeState(state,merged);library=merged;renderAll();persist();message('importStatus','Options imported into this browser. Your existing selections were kept.')}catch(e){message('importStatus','Import rejected: '+e.message,true)}finally{event.target.value=''}};
+$('jsonFile').onchange=async event=>{const file=event.target.files?.[0];if(!file)return;try{if(sourceBusy)throw Error('Wait for the selected library to finish loading.');if(file.size>1048576)throw Error('Use a JSON file smaller than 1 MiB.');const imported=Libraries.adaptPack(JSON.parse((await file.text()).replace(/^\uFEFF/,'')),'uploaded');let merged=clone(profiles.saved?.library||builtin);merged=mergePack(merged,library);merged=mergePack(merged,imported);const choices={...(profiles.saved?.selections||{}),...state.selections};const nextState=normalizeState({...state,selections:choices},merged);persist();activeSource='saved';library=merged;state=nextState;renderAll();persist();message('importStatus','Options added to My saved library. Existing libraries and selections were kept.')}catch(e){message('importStatus','Import rejected. Use a supported JSON library under 1 MiB. Your existing libraries and choices were kept.',true)}finally{event.target.value=''}};
 $('resetChoices').onclick=()=>{const fresh=freshState(library);for(const key of inputKeys)fresh[key]=state[key];fresh.selections=freshState(library).selections;fresh.microMotion=true;fresh.beats=true;fresh.noOverlays=false;state=normalizeState(fresh,library);renderAll();persist();message('actionStatus','Choices reset; reference notes kept.')};
-$('restoreLibrary').onclick=()=>{if(!confirm('Remove imported options and restore the built-in library? Reference notes will be kept.'))return;library=clone(builtin);state=normalizeState(state,library);renderAll();persist();message('importStatus','Built-in library restored.')};
+$('restoreLibrary').onclick=()=>switchLibrary('original');
 renderAll();persist();
 })();
 </script>
