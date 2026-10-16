@@ -1,0 +1,2049 @@
+{
+  "version": 1,
+  "name": "Instagram Prompt Creator - Additive v1",
+  "description": "Original non-explicit Reels direction options. Import with Upload JSON to merge; no defaults or existing IDs are replaced.",
+  "research_date": "2026-10-16",
+  "usage_notes": [
+    "Import this file using the existing Upload JSON control. The importer merges groups and options and keeps existing selections.",
+    "Every new option ID starts ig-. Every new group ID starts ig-. Existing groups are extended without changing their mode, defaults, or old options.",
+    "Select a Reel format and only the relevant action specialty; leave unrelated action groups at None to avoid conflicting instructions.",
+    "Use the existing Camera movement, Framing, Lighting, Time & pace, Voice treatment, Soundscape, and Music controls for exclusive choices.",
+    "No new option is selected automatically. Importing again does not duplicate options.",
+    "Finishing choices are labeled as plans. They do not claim the generation model performs captions, cuts, interpolation, audio mux, or licensed-track reuse.",
+    "Use your own scene summary, source links, exact dialogue, product facts, and desired actions. The pack never fetches or inspects references.",
+    "The taxonomy is broad rather than exhaustive or a real-time popularity ranking. It contains no promise of reach, engagement, or model execution.",
+    "Saved upstream MiniMax guides informed reference roles and sound separation; all option prose is independently authored."
+  ],
+  "research_sources": [
+    {
+      "title": "Meta - Introducing Instagram Reels",
+      "url": "https://about.fb.com/news/2020/08/introducing-instagram-reels/",
+      "used_for": "Foundational format vocabulary: clips, audio, transitions, alignment and speed. Historical duration limits are not used."
+    },
+    {
+      "title": "Meta - Reels creative essentials",
+      "url": "https://www.facebook.com/business/ads/facebook-instagram-reels-ads",
+      "used_for": "Vertical composition, clear audio and interface-safe visual information; no performance statistics are imported."
+    },
+    {
+      "title": "Adobe Express - Better social media videos",
+      "url": "https://www.adobe.com/express/learn/blog/better-social-media-videos",
+      "used_for": "Hook, focused story, behind-the-scenes and clear closing structure."
+    },
+    {
+      "title": "Canva - Beginner guide to Instagram Reels",
+      "url": "https://www.canva.com/learn/beginner-guide-instagram-reels/",
+      "used_for": "Broad creator formats and video assembly vocabulary. Older platform-length and ranking claims are not used."
+    },
+    {
+      "title": "Meta - Best practices for Instagram creators",
+      "url": "https://about.fb.com/news/2024/10/best-practices-education-hub-creators-instagram/",
+      "used_for": "Keep account-specific recommendations distinct from a reusable generic option library."
+    },
+    {
+      "title": "MiniMax - Full-reference prompting guide",
+      "url": "https://huggingface.co/MiniMaxAI/MiniMax-H3/blob/main/docs/VIDEO_PROMPT_WRITING_GUIDE_ref_en.md",
+      "used_for": "Consistent reference labels and separate visual, physical sound and music roles; consulted saved project copy."
+    },
+    {
+      "title": "MiniMax - Base prompting guide",
+      "url": "https://huggingface.co/MiniMaxAI/MiniMax-H3/blob/main/docs/VIDEO_PROMPT_WRITING_GUIDE_base_en.md",
+      "used_for": "Concrete ordered actions, camera movement and explicitly supplied speech; consulted saved project copy."
+    }
+  ],
+  "groups": [
+    {
+      "id": "ig-format",
+      "label": "Instagram - Reel format",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 1,
+      "default": [],
+      "options": [
+        {
+          "id": "ig-ootd",
+          "label": "Outfit of the day (OOTD)",
+          "text": "Use an outfit-of-the-day presentation: show the referenced outfit clearly, give one readable movement, then settle into a composed final pose."
+        },
+        {
+          "id": "ig-grwm",
+          "label": "Get ready with me (GRWM)",
+          "text": "Use a get-ready-with-me moment: {A} performs one user-specified preparation step with casual attention to the camera; preserve the referenced appearance."
+        },
+        {
+          "id": "ig-try-on",
+          "label": "Try-on / styling",
+          "text": "Present one referenced look through a front view and gentle turn; additional outfits require separately supplied looks and separately prepared shots."
+        },
+        {
+          "id": "ig-runway",
+          "label": "Model walk / runway",
+          "text": "Build a concise fashion presentation around an approach, a controlled pose, and a smooth turn within the available space."
+        },
+        {
+          "id": "ig-beauty",
+          "label": "Beauty routine",
+          "text": "Show one clearly specified beauty-routine step with careful hand placement, a readable application area, and a natural finish."
+        },
+        {
+          "id": "ig-hair",
+          "label": "Hair styling",
+          "text": "Show a user-specified hair-styling action while keeping the established hair color, length, face, and identity consistent."
+        },
+        {
+          "id": "ig-dance",
+          "label": "Dance / choreography",
+          "text": "Present a short repeatable dance phrase with a clear starting stance, coordinated movement, and a balanced finish."
+        },
+        {
+          "id": "ig-lip-sync",
+          "label": "Lip-sync performance",
+          "text": "Prepare an expressive performance for an explicitly supplied lyric or spoken line; do not invent words or infer audio reuse from the motion reference."
+        },
+        {
+          "id": "ig-vlog",
+          "label": "Mini vlog",
+          "text": "Treat the shot as a candid mini-vlog moment with a clear activity, one observable development, and a natural closing reaction."
+        },
+        {
+          "id": "ig-day-life",
+          "label": "Day in the life",
+          "text": "Show one recognizable moment from the user's described daily routine; keep the current shot coherent rather than compressing a whole day into one take."
+        },
+        {
+          "id": "ig-morning",
+          "label": "Morning routine",
+          "text": "Present one user-specified morning activity with an unhurried start, a purposeful gesture, and a calm finish."
+        },
+        {
+          "id": "ig-evening",
+          "label": "Evening / wind-down routine",
+          "text": "Present one user-specified wind-down activity with relaxed timing and small, believable physical adjustments."
+        },
+        {
+          "id": "ig-tutorial",
+          "label": "How-to / tutorial",
+          "text": "Demonstrate one user-specified practical step from setup through action to its visible result; keep the important hand or object movement readable."
+        },
+        {
+          "id": "ig-tips",
+          "label": "Tips / checklist",
+          "text": "Stage a clear creator presentation for user-supplied tips, with distinct gestures and pauses; add exact wording later or supply a complete speech script."
+        },
+        {
+          "id": "ig-explainer",
+          "label": "Explainer / educational",
+          "text": "Use a focused explanatory presentation with calm eye contact and one clear demonstration tied to the user's topic."
+        },
+        {
+          "id": "ig-storytime",
+          "label": "Storytime",
+          "text": "Use a conversational storytime performance with an attentive opening, a visible change of expression, and an understated closing reaction; use only supplied narrative facts."
+        },
+        {
+          "id": "ig-pov",
+          "label": "POV scenario",
+          "text": "Stage the user's specified point-of-view situation through clear eyelines and a simple physical interaction without inventing hidden context."
+        },
+        {
+          "id": "ig-skit",
+          "label": "Comedy skit",
+          "text": "Use a small visual setup, a readable surprise, and a reaction pause; let the physical timing carry the joke without adding unsupplied dialogue."
+        },
+        {
+          "id": "ig-reaction",
+          "label": "Reaction video",
+          "text": "Hold attention on {A}'s reaction to the user-specified event, progressing from noticing to recognition and a clear final response."
+        },
+        {
+          "id": "ig-interview",
+          "label": "Interview / Q&A",
+          "text": "Stage a two-person interview with distinct eyelines and turns of attention; questions and answers must come from the user's script.",
+          "requiresSubjects": 2
+        },
+        {
+          "id": "ig-duet",
+          "label": "Two-person collaboration",
+          "text": "Give {A} and {B} complementary actions with distinct screen positions, readable handoffs, and no accidental merging.",
+          "requiresSubjects": 2
+        },
+        {
+          "id": "ig-bts",
+          "label": "Behind the scenes",
+          "text": "Show a believable preparation or working moment tied to the user's described process, keeping the tools and workspace faithful to the references."
+        },
+        {
+          "id": "ig-process",
+          "label": "Making / process video",
+          "text": "Focus on one stage of making something, showing the tool approach, the contact, and the small resulting change continuously."
+        },
+        {
+          "id": "ig-reveal",
+          "label": "Reveal / transformation",
+          "text": "Build anticipation around an already supplied result, then make it clearly visible; a different before-and-after state needs its own supplied reference."
+        },
+        {
+          "id": "ig-before-after",
+          "label": "Before / after comparison",
+          "text": "Prepare a matched-composition comparison in finishing using separately supplied before and after states; this generated shot retains its own referenced state."
+        },
+        {
+          "id": "ig-unboxing",
+          "label": "Unboxing",
+          "text": "Show {A} opening the specified package carefully, revealing the supplied item, and pausing so the item can be read visually."
+        },
+        {
+          "id": "ig-review",
+          "label": "Product review",
+          "text": "Present the referenced item through a neutral demonstration and a reaction appropriate to user-supplied findings; do not invent performance claims or a testimonial."
+        },
+        {
+          "id": "ig-demo",
+          "label": "Product demonstration",
+          "text": "Show one genuine user-specified use of the item, keeping its shape, controls, labels, and contact points consistent."
+        },
+        {
+          "id": "ig-ugc",
+          "label": "Creator / UGC-style presentation",
+          "text": "Use a natural creator presentation with approachable eye contact, modest hand gestures, and a clear view of the supplied item; do not invent personal experience."
+        },
+        {
+          "id": "ig-haul",
+          "label": "Haul / favorites",
+          "text": "Present one referenced item at a time; prepare additional supplied items as separate takes for a later haul sequence."
+        },
+        {
+          "id": "ig-recipe",
+          "label": "Recipe / cooking",
+          "text": "Show one specified cooking step with visible utensils, plausible quantities, clear contact, and continuous food geometry."
+        },
+        {
+          "id": "ig-fitness",
+          "label": "Workout / movement demo",
+          "text": "Show one user-specified exercise repetition at a controlled pace with readable alignment and a stable finish; do not invent fitness results."
+        },
+        {
+          "id": "ig-travel",
+          "label": "Travel / destination",
+          "text": "Show a specific supplied location through one purposeful movement or reveal, preserving its architecture and spatial relationships."
+        },
+        {
+          "id": "ig-tour",
+          "label": "Room / property tour",
+          "text": "Guide attention through the supplied space with a simple movement and a clear point of interest, without inventing additional rooms."
+        },
+        {
+          "id": "ig-pets",
+          "label": "Pet / animal moment",
+          "text": "Show a small user-described animal behavior with species-appropriate motion and stable anatomy; do not force human facial expressions."
+        },
+        {
+          "id": "ig-nature",
+          "label": "Nature / outdoor moment",
+          "text": "Let a specified natural detail develop through restrained movement while keeping the supplied environment coherent."
+        },
+        {
+          "id": "ig-asmr",
+          "label": "ASMR / satisfying process",
+          "text": "Make one precise visible action easy to follow, using restrained close physical sounds and continuous material behavior."
+        },
+        {
+          "id": "ig-art",
+          "label": "Art / craft reveal",
+          "text": "Show a user-supplied art or craft process or finished piece with careful hand placement and a readable final presentation."
+        },
+        {
+          "id": "ig-music",
+          "label": "Music / instrument performance",
+          "text": "Stage a user-specified musical gesture with plausible instrument handling; exact fingering, lyrics, and soundtrack require explicit supplied material."
+        },
+        {
+          "id": "ig-event",
+          "label": "Event / celebration",
+          "text": "Capture a user-specified celebration moment through clear reactions and one readable action without inventing guests or signage."
+        },
+        {
+          "id": "ig-announcement",
+          "label": "Announcement / launch",
+          "text": "Use a composed creator presentation and a clear reveal of the supplied subject or item; factual announcement wording is supplied separately."
+        },
+        {
+          "id": "ig-motivation",
+          "label": "Motivational / reflective",
+          "text": "Use a grounded reflective performance with purposeful posture, measured movement, and an understated sense of resolution, without fabricated quotes."
+        },
+        {
+          "id": "ig-recap",
+          "label": "Recap / highlight",
+          "text": "Create a clear highlight moment suitable for a later recap; additional moments are assembled from separate supplied or generated takes."
+        },
+        {
+          "id": "ig-loop",
+          "label": "Seamless visual loop",
+          "text": "Design one cyclical movement that returns close to its opening composition and pace, without reversing gravity or causing an abrupt pose reset."
+        }
+      ]
+    },
+    {
+      "id": "ig-hook",
+      "label": "Instagram - Opening hook",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 5,
+      "default": [],
+      "options": [
+        {
+          "id": "ig-action-first",
+          "label": "Start mid-action",
+          "text": "Begin with the specified action already visibly underway, then make its purpose clear through the next movement."
+        },
+        {
+          "id": "ig-result-first",
+          "label": "Result first",
+          "text": "Make the user-supplied completed result visible immediately, then use a small gesture to direct attention to it."
+        },
+        {
+          "id": "ig-eye-contact",
+          "label": "Immediate eye contact",
+          "text": "Begin with a steady, friendly look into the lens before the main action develops."
+        },
+        {
+          "id": "ig-walk-in",
+          "label": "Walk into frame",
+          "text": "Begin with clear space, then let {A} enter naturally and arrive at the main presentation position."
+        },
+        {
+          "id": "ig-turn-in",
+          "label": "Turn toward viewer",
+          "text": "Open with {A} slightly turned away; turn toward the lens with smooth head and shoulder coordination."
+        },
+        {
+          "id": "ig-foreground",
+          "label": "Foreground detail",
+          "text": "Start attention on an existing foreground detail, then reveal the relationship to the subject through a modest camera or subject movement."
+        },
+        {
+          "id": "ig-object-up",
+          "label": "Bring item into view",
+          "text": "Raise the supplied item into a clear viewing position with a continuous hand path and a brief hold."
+        },
+        {
+          "id": "ig-reveal-gesture",
+          "label": "Gesture-led reveal",
+          "text": "Use one small uncovering or indicating gesture to reveal an existing reference detail without a scene transformation."
+        },
+        {
+          "id": "ig-reaction",
+          "label": "Reaction first",
+          "text": "Begin with an immediately readable reaction, then direct the gaze toward the user-specified cause."
+        },
+        {
+          "id": "ig-pause",
+          "label": "Deliberate opening pause",
+          "text": "Use a brief composed opening beat, followed by one purposeful action; keep breathing and balance alive."
+        },
+        {
+          "id": "ig-hands",
+          "label": "Hands already working",
+          "text": "Open on hands already performing the specified task, with the object and contact point visible."
+        },
+        {
+          "id": "ig-approach",
+          "label": "Approach and stop",
+          "text": "Let {A} take a short approach toward the camera and stop smoothly before entering an uncomfortably close distance."
+        },
+        {
+          "id": "ig-curiosity",
+          "label": "Partial reveal",
+          "text": "Initially obscure a small part of the supplied item with a natural hand position, then uncover it without changing the item."
+        },
+        {
+          "id": "ig-contrast",
+          "label": "Visual contrast",
+          "text": "Make the user's supplied contrast readable through placement and action without inventing a new before or after state."
+        }
+      ]
+    },
+    {
+      "id": "ig-structure",
+      "label": "Instagram - Story structure",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 7,
+      "default": [],
+      "options": [
+        {
+          "id": "ig-setup-payoff",
+          "label": "Setup / action / payoff",
+          "text": "Make the sequence legible as an initial situation, one purposeful action, and a visible consequence within the chosen duration."
+        },
+        {
+          "id": "ig-problem-solution",
+          "label": "Problem / demonstration / result",
+          "text": "Use only the user-specified problem and outcome; show the practical demonstration clearly between them."
+        },
+        {
+          "id": "ig-question-answer",
+          "label": "Question / demonstration",
+          "text": "Give an inquisitive opening look, demonstrate the user-specified point, then finish with a clear confirming gesture; no invented spoken question."
+        },
+        {
+          "id": "ig-anticipation",
+          "label": "Anticipation / reveal",
+          "text": "Build a short anticipation beat through gaze and hands, reveal the supplied detail, and hold the result."
+        },
+        {
+          "id": "ig-progress",
+          "label": "Small progress arc",
+          "text": "Show one observable incremental improvement in the specified action without claiming a broader transformation."
+        },
+        {
+          "id": "ig-three-beats",
+          "label": "Three visual beats",
+          "text": "Give the performance a readable introduction, development, and final beat, scaled to the selected {duration}-second duration."
+        },
+        {
+          "id": "ig-one-tip",
+          "label": "One tip only",
+          "text": "Keep the whole shot focused on one user-supplied practical idea rather than adding unrelated gestures or topics."
+        },
+        {
+          "id": "ig-reaction-payoff",
+          "label": "Action / reaction",
+          "text": "Make the specified action clear first, then leave a readable reaction beat before ending."
+        },
+        {
+          "id": "ig-demonstrate",
+          "label": "Show instead of explain",
+          "text": "Let a simple, visible user-specified action communicate the idea without invented dialogue or text."
+        },
+        {
+          "id": "ig-open-ended",
+          "label": "Open-ended continuation",
+          "text": "End with a natural continuation cue while retaining complete, physically plausible movement through the final frame."
+        }
+      ]
+    },
+    {
+      "id": "ig-presentation",
+      "label": "Instagram - Creator presentation",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 12,
+      "default": [],
+      "options": [
+        {
+          "id": "ig-selfie",
+          "label": "Handheld selfie style",
+          "text": "Use a believable front-facing phone perspective with restrained handheld drift; keep face proportions stable."
+        },
+        {
+          "id": "ig-tripod",
+          "label": "Phone on tripod",
+          "text": "Use an eye-level phone-on-tripod perspective with a stable horizon and relaxed creator presence."
+        },
+        {
+          "id": "ig-mirror",
+          "label": "Mirror presentation",
+          "text": "When the reference includes a mirror, keep reflected geometry, handedness, phone placement, and identity consistent as {A} poses."
+        },
+        {
+          "id": "ig-talking-head",
+          "label": "Talking-head framing",
+          "text": "Use a direct-to-lens presentation with small natural gestures; actual speech occurs only from a separately supplied exact script."
+        },
+        {
+          "id": "ig-hands-only",
+          "label": "Hands-only demonstration",
+          "text": "Keep the activity and hands prominent without introducing an unseen face or additional body parts into the composition."
+        },
+        {
+          "id": "ig-overhead",
+          "label": "Overhead process",
+          "text": "Use the supplied overhead working composition with clear hand paths and enough space around the specified activity."
+        },
+        {
+          "id": "ig-desk",
+          "label": "Desk creator",
+          "text": "Present the specified desk activity with restrained posture changes and a clear relationship between hands, tools, and workspace."
+        },
+        {
+          "id": "ig-walking-vlog",
+          "label": "Walk-and-talk posture",
+          "text": "Use a gentle walking creator presentation with controlled body bounce; actual spoken words require the user's exact script."
+        },
+        {
+          "id": "ig-observer",
+          "label": "Candid observer",
+          "text": "Let {A} remain engaged in the user-described activity rather than continually acknowledging the camera."
+        },
+        {
+          "id": "ig-host",
+          "label": "Host / presenter",
+          "text": "Use welcoming posture, purposeful gestures, and a short presentation hold around the supplied topic or object."
+        }
+      ]
+    },
+    {
+      "id": "ig-look",
+      "label": "Instagram - Visual treatment",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 15,
+      "default": [],
+      "options": [
+        {
+          "id": "ig-natural",
+          "label": "Natural phone video",
+          "text": "Keep a natural smartphone-video appearance with believable skin texture, restrained processing, and stable exposure."
+        },
+        {
+          "id": "ig-editorial",
+          "label": "Fashion editorial",
+          "text": "Use deliberate posing and clean visual emphasis on the referenced look while preserving identity, outfit, and environment."
+        },
+        {
+          "id": "ig-cinematic",
+          "label": "Cinematic realism",
+          "text": "Use controlled contrast, smooth tonal rolloff, and natural detail without altering the referenced scene's contents."
+        },
+        {
+          "id": "ig-documentary",
+          "label": "Documentary realism",
+          "text": "Retain an observational, lightly polished appearance with natural texture and credible physical behavior."
+        },
+        {
+          "id": "ig-minimal",
+          "label": "Clean minimal",
+          "text": "Keep attention on the existing subject through restrained motion and clear composition; do not remove reference objects automatically."
+        },
+        {
+          "id": "ig-cozy",
+          "label": "Cozy lifestyle",
+          "text": "Use an intimate, relaxed performance and gentle visual contrast without replacing the supplied environment or light source."
+        },
+        {
+          "id": "ig-bright",
+          "label": "Bright and airy treatment",
+          "text": "Use restrained highlight handling and an open tonal treatment without changing reference light direction or clipping skin detail."
+        },
+        {
+          "id": "ig-moody",
+          "label": "Moody editorial treatment",
+          "text": "Use subdued midtones and restrained contrast without crushing visible detail or changing reference light direction."
+        },
+        {
+          "id": "ig-film",
+          "label": "Subtle film texture",
+          "text": "Apply restrained fine grain and gentle highlight rolloff while keeping color, geometry, and exposure temporally stable."
+        },
+        {
+          "id": "ig-retro",
+          "label": "Retro home-video finish",
+          "text": "Finishing treatment: add a restrained home-video texture later; preserve clean native generation without burned-in timestamps or tracking damage."
+        },
+        {
+          "id": "ig-luxury",
+          "label": "Understated luxury",
+          "text": "Use controlled movement, uncluttered visual emphasis, and detailed material rendering without adding brands or expensive objects."
+        },
+        {
+          "id": "ig-sport",
+          "label": "Athletic energy",
+          "text": "Use purposeful, precise physical timing and clear motion readability while retaining the chosen camera and reference framing."
+        },
+        {
+          "id": "ig-playful",
+          "label": "Playful creator style",
+          "text": "Use light expressive timing and approachable reactions without cartoon anatomy or unrequested visual effects."
+        },
+        {
+          "id": "ig-dreamy",
+          "label": "Soft dreamy finish",
+          "text": "Finishing treatment: use subtle diffusion and restrained color softness later, preserving readable faces and stable native detail."
+        }
+      ]
+    },
+    {
+      "id": "ig-fashion",
+      "label": "Instagram - Fashion & posing actions",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 102,
+      "default": [],
+      "options": [
+        {
+          "id": "ig-front-hold",
+          "label": "Front-facing outfit hold",
+          "text": "{A} settles into a relaxed front-facing stance so the referenced outfit is readable, keeping fingers and shoulders natural."
+        },
+        {
+          "id": "ig-quarter-turn",
+          "label": "Quarter-turn outfit view",
+          "text": "{A} makes a controlled quarter turn, pauses to show the side silhouette, then settles without changing the outfit."
+        },
+        {
+          "id": "ig-back-look",
+          "label": "Turn and look back",
+          "text": "{A} turns enough to show the referenced back silhouette, then looks back naturally over one shoulder without twisting the neck excessively."
+        },
+        {
+          "id": "ig-weight-shift",
+          "label": "Editorial weight shift",
+          "text": "{A} shifts weight from one leg to the other with a small hip adjustment, relaxed shoulders, and stable foot contact."
+        },
+        {
+          "id": "ig-cross-step",
+          "label": "Cross-step pose",
+          "text": "{A} takes a small controlled cross-step, holds balance, and relaxes into the pose without intersecting legs or feet."
+        },
+        {
+          "id": "ig-step-out",
+          "label": "Step out / step back",
+          "text": "{A} takes one short step outward to open the silhouette, pauses, then returns to a balanced stance."
+        },
+        {
+          "id": "ig-runway-stop",
+          "label": "Walk / stop / pose",
+          "text": "{A} takes a few natural model-walk steps, decelerates, holds one pose, and settles smoothly."
+        },
+        {
+          "id": "ig-pivot",
+          "label": "Heel-to-toe pivot",
+          "text": "{A} pivots through the feet with believable friction and coordinated shoulders, finishing in a comfortable stance."
+        },
+        {
+          "id": "ig-lapel",
+          "label": "Adjust existing lapel / collar",
+          "text": "If the referenced outfit has a collar or lapel, {A} adjusts it once with a light touch; do not add a garment feature."
+        },
+        {
+          "id": "ig-sleeve",
+          "label": "Adjust existing sleeve",
+          "text": "If the referenced garment has a sleeve, {A} makes one small sleeve adjustment with believable fabric contact."
+        },
+        {
+          "id": "ig-hem",
+          "label": "Show existing garment drape",
+          "text": "{A} lightly holds an existing garment edge to show its drape, keeping the outfit design and coverage unchanged."
+        },
+        {
+          "id": "ig-pocket",
+          "label": "Hand to existing pocket",
+          "text": "If a pocket exists in the reference, {A} places one hand naturally into it without creating a new pocket or hiding extra fingers."
+        },
+        {
+          "id": "ig-seated",
+          "label": "Seated fashion pose",
+          "text": "{A} settles into the referenced seat with relaxed leg placement, clear limb separation, and a small composed posture adjustment."
+        },
+        {
+          "id": "ig-accessory",
+          "label": "Present existing accessory",
+          "text": "{A} briefly presents a referenced accessory while preserving its identity, shape, and attachment points; do not introduce a new item."
+        },
+        {
+          "id": "ig-shoe",
+          "label": "Show referenced footwear",
+          "text": "Make a small foot placement change that reveals the existing footwear without lifting into an unstable or impossible stance."
+        },
+        {
+          "id": "ig-fabric-sway",
+          "label": "Gentle fabric sway",
+          "text": "{A} makes a restrained body turn that allows the existing garment to sway naturally and settle under gravity."
+        }
+      ]
+    },
+    {
+      "id": "ig-dance",
+      "label": "Instagram - Dance movement",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 103,
+      "default": [],
+      "options": [
+        {
+          "id": "ig-step-touch",
+          "label": "Step-touch groove",
+          "text": "{A} performs a short step-touch phrase with alternating weight transfers and relaxed coordinated arms."
+        },
+        {
+          "id": "ig-two-step",
+          "label": "Two-step groove",
+          "text": "{A} repeats a compact two-step pattern with grounded foot contact and a steady, comfortable rhythm."
+        },
+        {
+          "id": "ig-side-sway",
+          "label": "Side-to-side sway",
+          "text": "{A} sways gently side to side, allowing knees, hips, and shoulders to follow a coherent balanced rhythm."
+        },
+        {
+          "id": "ig-arm-phrase",
+          "label": "Simple arm choreography",
+          "text": "{A} performs a short repeatable arm phrase with clear hand shapes and smooth elbow and shoulder coordination."
+        },
+        {
+          "id": "ig-shoulder",
+          "label": "Shoulder groove",
+          "text": "{A} makes a restrained alternating shoulder groove with relaxed hands and a stable torso."
+        },
+        {
+          "id": "ig-hand-phrase",
+          "label": "Hand choreography",
+          "text": "{A} performs a simple hand-gesture phrase at chest height with fingers separated and wrists bending naturally."
+        },
+        {
+          "id": "ig-walk-groove",
+          "label": "Walking groove",
+          "text": "{A} combines a few natural forward steps with a small rhythmic upper-body groove and a stable finish."
+        },
+        {
+          "id": "ig-pivot-groove",
+          "label": "Pivot and groove",
+          "text": "{A} makes one modest pivot, returns to a readable frontal stance, and continues the same short groove."
+        },
+        {
+          "id": "ig-freeze",
+          "label": "Pose / groove / freeze",
+          "text": "{A} starts in a clear pose, performs one compact movement phrase, and finishes in a balanced held pose with natural breathing."
+        },
+        {
+          "id": "ig-partner",
+          "label": "Partner mirroring",
+          "text": "{A} and {B} perform a simple mirrored movement phrase with distinct silhouettes and consistent spacing.",
+          "requiresSubjects": 2
+        },
+        {
+          "id": "ig-call-response",
+          "label": "Movement call-and-response",
+          "text": "{A} performs a compact gesture phrase, then {B} answers with the same phrase while the first subject pauses naturally.",
+          "requiresSubjects": 2
+        },
+        {
+          "id": "ig-ref-rhythm",
+          "label": "Follow supplied rhythm broadly",
+          "text": "Use only the broad timing and energy of an explicitly supplied motion reference; preserve image-defined identity, wardrobe, and scene."
+        }
+      ]
+    },
+    {
+      "id": "ig-beauty",
+      "label": "Instagram - Beauty & grooming actions",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 104,
+      "default": [],
+      "options": [
+        {
+          "id": "ig-brush",
+          "label": "Brush application",
+          "text": "Using the user-specified referenced brush and application area, {A} makes a controlled application motion with gentle surface contact."
+        },
+        {
+          "id": "ig-skin",
+          "label": "Skincare application",
+          "text": "{A} applies the specified product through small gentle motions, keeping facial structure and skin texture stable."
+        },
+        {
+          "id": "ig-hair-tuck",
+          "label": "Tuck hair behind ear",
+          "text": "{A} tucks an existing section of hair behind one ear and lets the hand lower naturally without changing the hairstyle."
+        },
+        {
+          "id": "ig-hair-sweep",
+          "label": "Gentle hair sweep",
+          "text": "{A} lightly guides existing hair away from the face, maintaining hair length, density, and realistic strand motion."
+        },
+        {
+          "id": "ig-comb",
+          "label": "Comb / brush hair",
+          "text": "{A} guides the specified hair tool through the existing hair with continuous contact and no abrupt length or style changes."
+        },
+        {
+          "id": "ig-mirror-check",
+          "label": "Mirror check",
+          "text": "{A} checks the referenced mirror, makes one small user-specified adjustment, and relaxes into a satisfied neutral expression."
+        },
+        {
+          "id": "ig-product-close",
+          "label": "Beauty product presentation",
+          "text": "{A} holds the supplied product steadily near a clear viewing position without deforming fingers or inventing readable label text."
+        },
+        {
+          "id": "ig-texture",
+          "label": "Product texture detail",
+          "text": "Show a small amount of the supplied product moving naturally on the specified surface without changing its user-described consistency."
+        },
+        {
+          "id": "ig-finish",
+          "label": "Finished-look hold",
+          "text": "{A} gently turns the face to show the referenced finished look, preserving makeup placement, complexion, and facial proportions."
+        }
+      ]
+    },
+    {
+      "id": "ig-product",
+      "label": "Instagram - Product interactions",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 105,
+      "default": [],
+      "options": [
+        {
+          "id": "ig-lift",
+          "label": "Pick up and present",
+          "text": "{A} picks up the referenced item, adjusts to a plausible grip, and holds it in a clear viewing position."
+        },
+        {
+          "id": "ig-rotate",
+          "label": "Rotate item slowly",
+          "text": "{A} rotates the supplied item slowly through a small angle while keeping its geometry and label placement fixed."
+        },
+        {
+          "id": "ig-place",
+          "label": "Place item carefully",
+          "text": "{A} lowers the referenced item onto the specified existing surface with visible contact and a natural hand release."
+        },
+        {
+          "id": "ig-open",
+          "label": "Open lid / package",
+          "text": "{A} opens the specified existing lid or package along its real hinge or seam without changing the item's construction."
+        },
+        {
+          "id": "ig-button",
+          "label": "Press existing control",
+          "text": "{A} presses the specified existing control once, with believable fingertip contact; show only the user-specified response."
+        },
+        {
+          "id": "ig-compare",
+          "label": "Two-item comparison",
+          "text": "Place the two user-specified referenced items in a clear comparison arrangement without implying unsupplied superiority claims."
+        },
+        {
+          "id": "ig-detail",
+          "label": "Point out existing detail",
+          "text": "{A} indicates a specified visible product detail with one restrained finger gesture that does not cover it."
+        },
+        {
+          "id": "ig-in-use",
+          "label": "Natural in-use moment",
+          "text": "Show the referenced item used in the user-specified everyday action, maintaining credible grip, force, and contact."
+        },
+        {
+          "id": "ig-pack",
+          "label": "Pack an order",
+          "text": "Show one specified order-packing step with continuous object positions and a clear completion beat."
+        },
+        {
+          "id": "ig-flatlay",
+          "label": "Flat-lay arrangement",
+          "text": "Arrange only the supplied items in a readable existing workspace, with physically plausible hand placement and no added branding."
+        }
+      ]
+    },
+    {
+      "id": "ig-food",
+      "label": "Instagram - Food & drink actions",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 106,
+      "default": [],
+      "options": [
+        {
+          "id": "ig-pour",
+          "label": "Controlled pour",
+          "text": "Show a steady pour of the specified drink or ingredient with a continuous stream, plausible container angles, and no clipping."
+        },
+        {
+          "id": "ig-stir",
+          "label": "Stir / mix",
+          "text": "Use a small repeated stirring motion with consistent utensil contact and believable liquid or mixture resistance."
+        },
+        {
+          "id": "ig-slice",
+          "label": "Slice / cut ingredient",
+          "text": "Show one controlled user-specified cutting action with clear tool contact and continuous ingredient geometry."
+        },
+        {
+          "id": "ig-plate",
+          "label": "Plate / garnish",
+          "text": "Place the specified food or garnish carefully, keeping the dish arrangement consistent after the hand withdraws."
+        },
+        {
+          "id": "ig-coffee",
+          "label": "Coffee preparation",
+          "text": "Show one specified coffee-preparation step with the supplied equipment and a readable physical result."
+        },
+        {
+          "id": "ig-cup",
+          "label": "Lift cup / small sip",
+          "text": "{A} lifts the referenced cup with a plausible grip, takes a small natural sip if requested, and lowers it without facial distortion."
+        },
+        {
+          "id": "ig-taste",
+          "label": "Taste and react",
+          "text": "{A} takes a small user-specified taste and gives a restrained response consistent with the requested tone, without invented review claims."
+        },
+        {
+          "id": "ig-steam",
+          "label": "Gentle visible steam",
+          "text": "If the user specifies hot food or drink, allow a restrained wisp of steam to drift naturally without obscuring the subject."
+        },
+        {
+          "id": "ig-serve",
+          "label": "Present finished dish",
+          "text": "{A} presents the supplied finished dish, holds it level, and pauses so its existing details remain readable."
+        }
+      ]
+    },
+    {
+      "id": "ig-fitness",
+      "label": "Instagram - Fitness & wellness actions",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 107,
+      "default": [],
+      "options": [
+        {
+          "id": "ig-warmup",
+          "label": "Gentle warm-up",
+          "text": "{A} performs one user-specified low-impact warm-up movement with controlled range and stable balance."
+        },
+        {
+          "id": "ig-squat",
+          "label": "Controlled bodyweight squat",
+          "text": "{A} performs one comfortable bodyweight squat with coherent hip and knee movement and a stable return to standing."
+        },
+        {
+          "id": "ig-lunge",
+          "label": "Controlled lunge",
+          "text": "{A} performs one user-specified lunge with visible foot placement, balanced weight transfer, and a controlled return."
+        },
+        {
+          "id": "ig-stretch",
+          "label": "Gentle stretch",
+          "text": "{A} enters the user-specified comfortable stretch gradually, holds without bouncing, and releases smoothly."
+        },
+        {
+          "id": "ig-yoga",
+          "label": "Simple yoga transition",
+          "text": "{A} moves between two user-specified accessible positions with clear support points and no impossible joint angles."
+        },
+        {
+          "id": "ig-breath",
+          "label": "Breathing / mindfulness",
+          "text": "Use slow natural breathing, relaxed shoulders, and small posture adjustments rather than an entirely frozen body."
+        },
+        {
+          "id": "ig-walk",
+          "label": "Wellness walk",
+          "text": "{A} takes a short comfortable walk with natural footfalls and relaxed arm swing within the supplied environment."
+        },
+        {
+          "id": "ig-equipment",
+          "label": "Supplied equipment demo",
+          "text": "Show one user-specified use of the referenced exercise equipment with consistent grips and plausible resistance."
+        },
+        {
+          "id": "ig-rest",
+          "label": "Rest between movements",
+          "text": "{A} relaxes after the user-specified movement with subtle breathing and a natural recovery posture; do not exaggerate exertion."
+        }
+      ]
+    },
+    {
+      "id": "ig-travel",
+      "label": "Instagram - Travel & place actions",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 108,
+      "default": [],
+      "options": [
+        {
+          "id": "ig-arrival",
+          "label": "Arrival moment",
+          "text": "{A} arrives at the supplied location, pauses to orient, and acknowledges an existing point of interest."
+        },
+        {
+          "id": "ig-lookaround",
+          "label": "Look around",
+          "text": "{A} makes a small attentive look around the supplied surroundings without revealing invented architecture beyond the reference."
+        },
+        {
+          "id": "ig-stroll",
+          "label": "Destination stroll",
+          "text": "{A} walks naturally through the available referenced space while retaining its layout and scale."
+        },
+        {
+          "id": "ig-view",
+          "label": "Pause at a view",
+          "text": "{A} pauses to take in the supplied view, shifts weight comfortably, and allows the gaze to settle."
+        },
+        {
+          "id": "ig-window",
+          "label": "Look through existing window",
+          "text": "If the reference includes a window, {A} glances through it with natural head motion and stable reflection geometry."
+        },
+        {
+          "id": "ig-cafe",
+          "label": "Cafe / dining moment",
+          "text": "Show a user-specified cafe or dining action using only the supplied setting and objects."
+        },
+        {
+          "id": "ig-bag",
+          "label": "Handle referenced luggage",
+          "text": "{A} adjusts or carries the supplied bag or luggage with believable grip and weight, without introducing travel documents."
+        },
+        {
+          "id": "ig-architecture",
+          "label": "Architectural detail",
+          "text": "Emphasize a supplied architectural feature through a restrained reveal or attention shift without changing perspective abruptly."
+        },
+        {
+          "id": "ig-experience",
+          "label": "Local experience",
+          "text": "Show one user-described activity at the supplied destination with clear physical participation and no invented cultural claims."
+        }
+      ]
+    },
+    {
+      "id": "ig-home",
+      "label": "Instagram - Home & everyday routines",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 109,
+      "default": [],
+      "options": [
+        {
+          "id": "ig-tidy",
+          "label": "Tidy one area",
+          "text": "{A} moves one supplied object into its specified place with continuous contact and a small completion pause."
+        },
+        {
+          "id": "ig-clean",
+          "label": "Clean one surface",
+          "text": "{A} makes a controlled wiping motion on a supplied surface, preserving object layout and material texture."
+        },
+        {
+          "id": "ig-organize",
+          "label": "Organize referenced items",
+          "text": "{A} arranges the user-specified existing items through sequential hand movements without duplicates appearing."
+        },
+        {
+          "id": "ig-desk",
+          "label": "Start a desk task",
+          "text": "{A} settles into the referenced desk setup and begins the user-specified activity with natural posture and hand placement."
+        },
+        {
+          "id": "ig-read",
+          "label": "Read / turn page",
+          "text": "{A} follows the existing page with the eyes and turns one page naturally, without generating new readable text."
+        },
+        {
+          "id": "ig-plant",
+          "label": "Care for a plant",
+          "text": "{A} performs the specified gentle plant-care action using supplied tools and maintaining leaf geometry."
+        },
+        {
+          "id": "ig-flowers",
+          "label": "Arrange flowers",
+          "text": "{A} repositions one supplied stem or flower carefully without changing the arrangement's identity or adding new blooms."
+        },
+        {
+          "id": "ig-decor",
+          "label": "Show a decor detail",
+          "text": "Use a small gesture to highlight the specified existing decor detail while preserving the room layout."
+        },
+        {
+          "id": "ig-leave",
+          "label": "Ready to leave",
+          "text": "{A} completes one user-specified leaving-home gesture, such as lifting a supplied bag, then moves naturally toward the existing exit."
+        }
+      ]
+    },
+    {
+      "id": "ig-craft",
+      "label": "Instagram - Art, hobbies & work",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 111,
+      "default": [],
+      "options": [
+        {
+          "id": "ig-draw",
+          "label": "Drawing / sketching",
+          "text": "Show a short user-specified drawing action with a stable tool grip and continuous contact; do not invent detailed text or a different finished artwork."
+        },
+        {
+          "id": "ig-paint",
+          "label": "Paint / brushstroke",
+          "text": "Show one deliberate brushstroke on the supplied work surface with believable pressure and material deposition."
+        },
+        {
+          "id": "ig-make",
+          "label": "Craft assembly",
+          "text": "Show one specified assembly step with clear part identities and continuous hand-to-object contact."
+        },
+        {
+          "id": "ig-instrument",
+          "label": "Instrument handling",
+          "text": "{A} performs the user-specified musical gesture with stable instrument geometry and plausible hand placement."
+        },
+        {
+          "id": "ig-photo",
+          "label": "Photography moment",
+          "text": "{A} handles the referenced camera, aims naturally, and lowers it with believable grip and strap behavior."
+        },
+        {
+          "id": "ig-type",
+          "label": "Keyboard / desk work",
+          "text": "{A} makes a short, restrained typing gesture with natural finger separation; keep screen content unspecified or reference-faithful."
+        },
+        {
+          "id": "ig-repair",
+          "label": "Practical repair step",
+          "text": "Show one user-specified repair action using supplied tools with plausible force and no invented technical instructions."
+        },
+        {
+          "id": "ig-display",
+          "label": "Present finished work",
+          "text": "{A} presents the supplied finished piece with a modest adjustment and a clear viewing hold."
+        }
+      ]
+    },
+    {
+      "id": "ig-nature",
+      "label": "Instagram - Animals & natural motion",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 112,
+      "default": [],
+      "options": [
+        {
+          "id": "ig-pet-look",
+          "label": "Animal notices something",
+          "text": "The referenced animal makes a small species-appropriate head or ear adjustment toward the user's specified stimulus."
+        },
+        {
+          "id": "ig-pet-walk",
+          "label": "Animal walking",
+          "text": "The referenced animal takes a few species-appropriate steps with stable anatomy and coherent paw or hoof contact."
+        },
+        {
+          "id": "ig-pet-rest",
+          "label": "Resting animal",
+          "text": "Use subtle breathing and small natural adjustments appropriate to the supplied animal rather than rigid stillness."
+        },
+        {
+          "id": "ig-pet-contact",
+          "label": "Gentle animal interaction",
+          "text": "Show only the user-specified gentle interaction, with clear contact and a natural response from the referenced animal."
+        },
+        {
+          "id": "ig-leaves",
+          "label": "Leaves in a light breeze",
+          "text": "If foliage exists in the reference, let a few leaves move subtly in a light breeze and settle naturally."
+        },
+        {
+          "id": "ig-water",
+          "label": "Existing water movement",
+          "text": "If water exists in the reference, show small coherent ripples consistent with its scale and the user-specified motion."
+        },
+        {
+          "id": "ig-clouds",
+          "label": "Subtle cloud movement",
+          "text": "If clouds are visible in the reference, allow restrained coherent drift without sudden weather or lighting changes."
+        }
+      ]
+    },
+    {
+      "id": "ig-gesture",
+      "label": "Instagram - Hand & body gestures",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 117,
+      "default": [],
+      "options": [
+        {
+          "id": "ig-wave",
+          "label": "Small greeting wave",
+          "text": "{A} gives a brief relaxed wave with separated fingers and a natural return of the hand."
+        },
+        {
+          "id": "ig-point-item",
+          "label": "Point to supplied item",
+          "text": "{A} points once toward the specified existing item without covering it or crossing the hand through another object."
+        },
+        {
+          "id": "ig-open-palm",
+          "label": "Open-palm presentation",
+          "text": "{A} makes a small open-palm presenting gesture with natural wrist alignment and relaxed fingers."
+        },
+        {
+          "id": "ig-hands-together",
+          "label": "Hands loosely together",
+          "text": "{A} brings the hands loosely together, adjusts the fingers naturally, then lets them relax."
+        },
+        {
+          "id": "ig-nod",
+          "label": "Small affirmative nod",
+          "text": "{A} makes one small deliberate nod with coordinated eyes and a stable facial structure."
+        },
+        {
+          "id": "ig-head-tilt",
+          "label": "Attentive head tilt",
+          "text": "{A} tilts the head slightly as attention shifts, then returns comfortably toward neutral."
+        },
+        {
+          "id": "ig-shrug",
+          "label": "Light shrug",
+          "text": "{A} makes a small shoulder shrug and a restrained expression change without exaggerated anatomy."
+        },
+        {
+          "id": "ig-chest",
+          "label": "Hand to upper chest",
+          "text": "{A} briefly rests one relaxed hand against the upper chest, then lowers it naturally."
+        },
+        {
+          "id": "ig-invite",
+          "label": "Inviting hand gesture",
+          "text": "{A} makes a small inviting gesture toward the specified existing area without implying an unrequested scene change."
+        },
+        {
+          "id": "ig-thumb",
+          "label": "Thumbs-up",
+          "text": "{A} gives a brief clear thumbs-up with anatomically consistent fingers and a relaxed arm position."
+        },
+        {
+          "id": "ig-count",
+          "label": "Count on fingers",
+          "text": "{A} makes a short user-specified counting gesture with distinct fingers; no numeric text is generated."
+        },
+        {
+          "id": "ig-listen",
+          "label": "Attentive listening",
+          "text": "{A} listens with a small nod, natural eye movement, and restrained posture adjustments rather than continuous talking gestures."
+        }
+      ]
+    },
+    {
+      "id": "ig-gaze",
+      "label": "Instagram - Eyeline & attention",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 118,
+      "default": [],
+      "options": [
+        {
+          "id": "ig-lens",
+          "label": "Look at lens",
+          "text": "Keep the gaze primarily toward the camera lens with natural blinks and small, believable eye movements."
+        },
+        {
+          "id": "ig-off-camera",
+          "label": "Look just off camera",
+          "text": "Keep the gaze slightly beside the lens as if attending to a specified nearby point, without drifting eyes."
+        },
+        {
+          "id": "ig-item",
+          "label": "Look at held item",
+          "text": "Let the gaze follow the supplied item as it moves, then return naturally toward the presentation position."
+        },
+        {
+          "id": "ig-down-up",
+          "label": "Glance down then up",
+          "text": "{A} glances toward the user-specified detail, then raises the eyes toward the lens in one continuous movement."
+        },
+        {
+          "id": "ig-follow-hand",
+          "label": "Follow the hand gesture",
+          "text": "Coordinate the eyes and head with the specified hand gesture so attention leads the action naturally."
+        },
+        {
+          "id": "ig-over-shoulder",
+          "label": "Over-shoulder glance",
+          "text": "{A} gives a modest over-shoulder glance with comfortable neck rotation and stable eyes."
+        },
+        {
+          "id": "ig-partner",
+          "label": "Look toward partner",
+          "text": "{A} and {B} exchange brief attentive glances with distinct eyelines, then return to their specified activity.",
+          "requiresSubjects": 2
+        },
+        {
+          "id": "ig-environment",
+          "label": "Notice environment detail",
+          "text": "{A} notices an existing detail in the supplied environment, pauses briefly, and resumes the action."
+        }
+      ]
+    },
+    {
+      "id": "ig-transition",
+      "label": "Instagram - Transition plan (finishing)",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 180,
+      "default": [],
+      "options": [
+        {
+          "id": "ig-hard-cut",
+          "label": "Clean hard cut",
+          "text": "Finishing plan: cut between separately prepared takes at a purposeful action boundary; this native take remains continuous."
+        },
+        {
+          "id": "ig-match-action",
+          "label": "Match on action",
+          "text": "Finishing plan: join separate takes at matching stages of the same physical action, retaining natural screen direction."
+        },
+        {
+          "id": "ig-match-shape",
+          "label": "Graphic match cut",
+          "text": "Finishing plan: join separately prepared shots using a similar existing shape or composition; do not morph objects in this native take."
+        },
+        {
+          "id": "ig-hand-cover",
+          "label": "Hand-cover transition",
+          "text": "Finishing plan: join separately prepared takes while a hand naturally covers the lens; retain continuous hand anatomy in each take."
+        },
+        {
+          "id": "ig-object-wipe",
+          "label": "Foreground object wipe",
+          "text": "Finishing plan: hide the join behind a supplied foreground object passing through frame; do not invent the object in this native take."
+        },
+        {
+          "id": "ig-whip",
+          "label": "Whip-pan transition",
+          "text": "Finishing plan: match the direction and speed of separately prepared camera pans, joining them during motion blur."
+        },
+        {
+          "id": "ig-spin",
+          "label": "Turn / spin match",
+          "text": "Finishing plan: join separate takes at a matching body turn with consistent center position and rotation direction."
+        },
+        {
+          "id": "ig-snap",
+          "label": "Snap-on-beat transition",
+          "text": "Finishing plan: align a user-specified finger snap or gesture with the cut between separately prepared looks; do not transform clothing in this native take."
+        },
+        {
+          "id": "ig-step",
+          "label": "Step-through transition",
+          "text": "Finishing plan: cut between separately prepared takes at matching foot positions, preserving scale and walking direction."
+        },
+        {
+          "id": "ig-zoom",
+          "label": "Zoom match",
+          "text": "Finishing plan: join separate takes at matching framing scales using a restrained edit zoom, retaining the clean native source."
+        },
+        {
+          "id": "ig-door",
+          "label": "Doorway / occlusion transition",
+          "text": "Finishing plan: hide the join behind an existing doorway edge or occlusion in separately prepared shots."
+        },
+        {
+          "id": "ig-dissolve",
+          "label": "Gentle dissolve",
+          "text": "Finishing plan: dissolve between separate shots at a quiet point, avoiding an appearance of merged faces or limbs in native generation."
+        },
+        {
+          "id": "ig-beat",
+          "label": "Beat-matched cut",
+          "text": "Finishing plan: place a clean cut on a selected beat from separately supplied or licensed music; no source soundtrack is assumed."
+        },
+        {
+          "id": "ig-loop",
+          "label": "Loop closure",
+          "text": "Finishing plan: join the ending and opening on matching composition, direction, and movement phase after checking the complete native take."
+        }
+      ]
+    },
+    {
+      "id": "ig-edit",
+      "label": "Instagram - Edit rhythm (finishing)",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 181,
+      "default": [],
+      "options": [
+        {
+          "id": "ig-single",
+          "label": "One continuous take",
+          "text": "Keep one complete continuous take as the finished presentation, retaining the natural action onset and ending."
+        },
+        {
+          "id": "ig-montage",
+          "label": "Short montage",
+          "text": "Finishing plan: assemble distinct separately prepared moments into a concise montage, keeping this native take free of synthetic cuts."
+        },
+        {
+          "id": "ig-jump",
+          "label": "Talking-head jump cuts",
+          "text": "Finishing plan: remove pauses from separately recorded or scripted speech at clean boundaries; preserve mouth and gesture continuity."
+        },
+        {
+          "id": "ig-broll",
+          "label": "A-roll plus B-roll",
+          "text": "Finishing plan: pair the supplied presentation with separately prepared detail shots that illustrate its actual topic."
+        },
+        {
+          "id": "ig-beat",
+          "label": "Music-led pacing",
+          "text": "Finishing plan: align selected edit points with separately supplied music beats without retiming speech unnaturally."
+        },
+        {
+          "id": "ig-slow",
+          "label": "Slow-motion accent",
+          "text": "Finishing plan: slow a suitable source section using a separate interpolation step when authorized; retain a clean native-speed generation first."
+        },
+        {
+          "id": "ig-speed",
+          "label": "Speed ramp",
+          "text": "Finishing plan: use a measured speed ramp on suitable continuous footage after native review, preserving movement endpoints and audio timing."
+        },
+        {
+          "id": "ig-timelapse",
+          "label": "Time-lapse assembly",
+          "text": "Finishing plan: compress separately captured or generated process stages into a time-lapse; do not force an entire long process into this native take."
+        },
+        {
+          "id": "ig-freeze",
+          "label": "Freeze-frame accent",
+          "text": "Finishing plan: hold a selected completed source frame briefly at a deliberate point; keep the native take continuously alive."
+        },
+        {
+          "id": "ig-split",
+          "label": "Split-screen comparison",
+          "text": "Finishing plan: place separately prepared shots side by side with matched scale and timing; preserve this native take as a full clean frame."
+        },
+        {
+          "id": "ig-photo",
+          "label": "Photo / video mix",
+          "text": "Finishing plan: combine supplied stills with separate video takes using deliberate timing and stable image framing."
+        }
+      ]
+    },
+    {
+      "id": "ig-text",
+      "label": "Instagram - Text & accessibility (finishing)",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 182,
+      "default": [],
+      "options": [
+        {
+          "id": "ig-clean",
+          "label": "Clean image / no overlays",
+          "text": "Keep native video clean, with no new captions, logos, watermarks, or interface elements."
+        },
+        {
+          "id": "ig-captions",
+          "label": "Speech captions later",
+          "text": "Finishing plan: add accurate captions from the user's supplied or verified speech, positioned clear of faces, hands, and Instagram interface areas; generate no lettering in the native take."
+        },
+        {
+          "id": "ig-hook",
+          "label": "Opening title later",
+          "text": "Finishing plan: add only the user's exact opening title in a video editor, keeping the native take free of generated text."
+        },
+        {
+          "id": "ig-steps",
+          "label": "Step labels later",
+          "text": "Finishing plan: add the user's exact step labels at the matching demonstrated moments, with readable contrast and adequate reading time."
+        },
+        {
+          "id": "ig-comparison",
+          "label": "Comparison labels later",
+          "text": "Finishing plan: add user-supplied comparison labels to separately prepared states without inventing measurements or claims."
+        },
+        {
+          "id": "ig-cta",
+          "label": "Closing CTA later",
+          "text": "Finishing plan: add the user's exact closing call to action after the visual payoff, without changing the clean native source."
+        },
+        {
+          "id": "ig-safe",
+          "label": "Clear interface areas",
+          "text": "Keep essential faces, hands, and the key item away from likely interface-covered edges when the prepared reference framing allows; do not crop or stretch the source automatically."
+        },
+        {
+          "id": "ig-sound-off",
+          "label": "Understandable with sound off",
+          "text": "Make the specified visual action readable without audio; any explanatory text is supplied exactly and added during finishing."
+        },
+        {
+          "id": "ig-cover",
+          "label": "Cover frame later",
+          "text": "Finishing plan: choose a clear frame from the actual completed clip and add only user-approved title text to a separate cover asset."
+        }
+      ]
+    },
+    {
+      "id": "ig-ending",
+      "label": "Instagram - Ending & loop",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 175,
+      "default": [],
+      "options": [
+        {
+          "id": "ig-hold",
+          "label": "Hold the result",
+          "text": "Let the last action settle and hold the supplied result clearly, with natural breathing and small balance adjustments."
+        },
+        {
+          "id": "ig-smile",
+          "label": "Small smile finish",
+          "text": "Finish the action with a gradual restrained smile and relaxed shoulders rather than a sudden facial change."
+        },
+        {
+          "id": "ig-look",
+          "label": "Final lens acknowledgment",
+          "text": "Finish with a brief natural glance toward the lens after the main action has completed."
+        },
+        {
+          "id": "ig-return",
+          "label": "Return to starting pose",
+          "text": "Guide the final movement naturally back close to the opening pose and composition without a snap or reversed action."
+        },
+        {
+          "id": "ig-continue",
+          "label": "Continue beyond frame",
+          "text": "End while a natural action is still continuing smoothly, without a sudden freeze or abrupt body reset."
+        },
+        {
+          "id": "ig-exit",
+          "label": "Natural exit",
+          "text": "If space permits, {A} finishes the main action and leaves the frame in the specified direction with complete believable steps."
+        },
+        {
+          "id": "ig-place",
+          "label": "Place item and release",
+          "text": "End by setting the supplied item down clearly, releasing the grip, and allowing the hands to relax."
+        },
+        {
+          "id": "ig-partner",
+          "label": "Shared closing reaction",
+          "text": "{A} and {B} finish with a small coordinated reaction and relaxed eyelines while remaining visually distinct.",
+          "requiresSubjects": 2
+        },
+        {
+          "id": "ig-cyclic",
+          "label": "Repeatable motion phase",
+          "text": "End the cyclical action near its opening movement phase and speed so a later loop join can be smooth."
+        }
+      ]
+    },
+    {
+      "id": "ig-foley",
+      "label": "Instagram - Close physical sound details",
+      "target": "overall_soundscape",
+      "multi": false,
+      "order": 165,
+      "default": [],
+      "options": [
+        {
+          "id": "ig-soft-cloth",
+          "label": "Quiet fabric movement",
+          "text": "When fabric moves visibly, add only restrained soft rustle consistent with the referenced material."
+        },
+        {
+          "id": "ig-quiet-steps",
+          "label": "Nearly inaudible footsteps",
+          "text": "Keep footsteps nearly inaudible below speech or ambience, matching the user-specified surface and indoor or outdoor acoustics."
+        },
+        {
+          "id": "ig-package",
+          "label": "Paper / packaging sounds",
+          "text": "For visible package handling, use quiet material-specific folds, paper movement, or small contact sounds without exaggerated crackling."
+        },
+        {
+          "id": "ig-pour",
+          "label": "Small pour sounds",
+          "text": "For the specified visible pour, use a soft continuous liquid sound that follows the stream and stops with it."
+        },
+        {
+          "id": "ig-tool",
+          "label": "Gentle tool contact",
+          "text": "For visible tool work, add restrained contact sounds synchronized to actual touches rather than a continuous unrelated sound bed."
+        },
+        {
+          "id": "ig-ceramic",
+          "label": "Cup / plate contact",
+          "text": "Use a small realistic contact sound only when the referenced cup or dish visibly touches the specified surface."
+        },
+        {
+          "id": "ig-asmr",
+          "label": "Close ASMR detail",
+          "text": "Use restrained close-miked sounds synchronized to the specified action, with low background noise and no invented whispering."
+        },
+        {
+          "id": "ig-off",
+          "label": "No added close foley",
+          "text": "Do not add close foley details; retain only the separately selected overall soundscape."
+        }
+      ]
+    },
+    {
+      "id": "camera",
+      "label": "Camera movement",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 40,
+      "default": [],
+      "options": [
+        {
+          "id": "ig-dolly-out",
+          "label": "IG - Slow dolly out",
+          "text": "The camera retreats slowly along a short smooth path, revealing more of the supplied surroundings without a jump in perspective."
+        },
+        {
+          "id": "ig-push-pause",
+          "label": "IG - Push in and settle",
+          "text": "The camera makes a small deliberate push toward the subject, then settles gently before the final beat."
+        },
+        {
+          "id": "ig-handheld",
+          "label": "IG - Subtle handheld",
+          "text": "Use restrained handheld movement with small natural drift, no abrupt shake, and a stable overall horizon."
+        },
+        {
+          "id": "ig-selfie",
+          "label": "IG - Stable selfie follow",
+          "text": "Maintain a believable front-facing phone distance with small coordinated handheld movement and stable facial perspective."
+        },
+        {
+          "id": "ig-follow-back",
+          "label": "IG - Follow from behind",
+          "text": "The camera follows the subject from behind at a consistent distance and height with smooth changes of speed."
+        },
+        {
+          "id": "ig-lead",
+          "label": "IG - Lead the walk",
+          "text": "The camera retreats smoothly ahead of the approaching subject, maintaining a comfortable distance and readable framing."
+        },
+        {
+          "id": "ig-arc",
+          "label": "IG - Small lateral arc",
+          "text": "The camera moves on a short gentle arc while keeping the subject's scale and the horizon consistent."
+        },
+        {
+          "id": "ig-tilt-up",
+          "label": "IG - Slow tilt upward",
+          "text": "The camera makes a small deliberate upward tilt to reveal the supplied subject without changing physical camera position."
+        },
+        {
+          "id": "ig-tilt-down",
+          "label": "IG - Slow tilt downward",
+          "text": "The camera makes a small deliberate downward tilt toward the specified existing detail, then settles."
+        },
+        {
+          "id": "ig-rise",
+          "label": "IG - Gentle pedestal rise",
+          "text": "The camera rises a short distance vertically with smooth acceleration, keeping the subject centered without an orbit."
+        },
+        {
+          "id": "ig-lower",
+          "label": "IG - Gentle pedestal lower",
+          "text": "The camera lowers a short distance vertically while retaining a stable lens direction and smooth motion."
+        },
+        {
+          "id": "ig-rack",
+          "label": "IG - Gentle focus shift",
+          "text": "Keep the camera stationary and shift focus slowly between two user-specified existing depth planes without changing facial or object geometry."
+        }
+      ]
+    },
+    {
+      "id": "framing",
+      "label": "Framing",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 30,
+      "default": [],
+      "options": [
+        {
+          "id": "ig-reel-safe",
+          "label": "IG - Reel-safe prepared frame",
+          "text": "Use a prepared 9:16 composition only when the supplied inputs and workflow already support it; retain full important action and do not stretch, silently crop, or override the reference aspect ratio."
+        },
+        {
+          "id": "ig-three-quarter",
+          "label": "IG - Three-quarter body",
+          "text": "Frame the subject from head to below the knees with comfortable hand and head margins when the prepared reference supports this view."
+        },
+        {
+          "id": "ig-face-hands",
+          "label": "IG - Face and hands",
+          "text": "Keep the face and active hands visible together without distorting perspective or cutting off the demonstrated gesture."
+        },
+        {
+          "id": "ig-detail",
+          "label": "IG - Existing object detail",
+          "text": "Use a clear detail view of the specified referenced object while maintaining its physical proportions and context."
+        },
+        {
+          "id": "ig-wide",
+          "label": "IG - Environmental portrait",
+          "text": "Include the subject and enough of the supplied environment to explain the activity, without adding unseen rooms or scenery."
+        },
+        {
+          "id": "ig-negative",
+          "label": "IG - Space for later text",
+          "text": "When the existing framing allows, retain a clear area beside the main action for later captions without removing reference objects."
+        },
+        {
+          "id": "ig-feet",
+          "label": "IG - Footwork readability",
+          "text": "Keep head, hands, and complete foot placements within the prepared frame throughout the selected movement."
+        },
+        {
+          "id": "ig-table",
+          "label": "IG - Tabletop activity",
+          "text": "Keep the relevant working surface, hands, and specified items readable with comfortable edges around the action."
+        }
+      ]
+    },
+    {
+      "id": "lighting",
+      "label": "Lighting",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 60,
+      "default": [],
+      "options": [
+        {
+          "id": "ig-window",
+          "label": "IG - Soft window key",
+          "text": "Change only the lighting to a soft window-like key with gentle directional shadow and stable exposure; retain all reference scene contents."
+        },
+        {
+          "id": "ig-overcast",
+          "label": "IG - Overcast softness",
+          "text": "Change only the lighting to broad diffuse overcast-style illumination with restrained contrast and stable skin tones."
+        },
+        {
+          "id": "ig-golden",
+          "label": "IG - Golden-hour warmth",
+          "text": "Change only the lighting to low warm directional illumination with believable shadow relationships and controlled highlights."
+        },
+        {
+          "id": "ig-blue",
+          "label": "IG - Blue-hour coolness",
+          "text": "Change only the lighting to soft cool ambient illumination with restrained warm practical accents if such fixtures already exist."
+        },
+        {
+          "id": "ig-studio",
+          "label": "IG - Soft studio key",
+          "text": "Change only the lighting to a broad soft key and gentle fill, preserving identity, scene layout, and plausible shadows."
+        },
+        {
+          "id": "ig-rim",
+          "label": "IG - Restrained rim light",
+          "text": "Change only the lighting to include a modest rim separating the subject from the existing background without glowing outlines."
+        },
+        {
+          "id": "ig-ring",
+          "label": "IG - Soft frontal creator light",
+          "text": "Change only the lighting to a soft frontal creator-light treatment with restrained catchlights and natural facial texture."
+        },
+        {
+          "id": "ig-practicals",
+          "label": "IG - Existing practical lights",
+          "text": "Use the reference's existing visible fixtures as motivated light sources with stable brightness and no newly invented lamps."
+        },
+        {
+          "id": "ig-contrast",
+          "label": "IG - Controlled side light",
+          "text": "Change only the lighting to a controlled side key with readable shadow detail and no exposure pulsing."
+        }
+      ]
+    },
+    {
+      "id": "mood",
+      "label": "Expression & mood",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 110,
+      "default": [],
+      "options": [
+        {
+          "id": "ig-friendly",
+          "label": "IG - Friendly / approachable",
+          "text": "{A} uses relaxed eye contact, a small welcoming smile, and easy shoulder movement."
+        },
+        {
+          "id": "ig-playful",
+          "label": "IG - Playful",
+          "text": "{A} uses a light eyebrow change and a small amused smile with restrained, readable physical timing."
+        },
+        {
+          "id": "ig-thoughtful",
+          "label": "IG - Thoughtful",
+          "text": "{A} pauses briefly, shifts the eyes toward the specified point of interest, and settles into a composed expression."
+        },
+        {
+          "id": "ig-surprised",
+          "label": "IG - Small surprise",
+          "text": "{A} notices the specified event with a modest eye and brow response, then lets the expression settle naturally."
+        },
+        {
+          "id": "ig-amused",
+          "label": "IG - Understated amusement",
+          "text": "A small smile develops after the user-specified payoff, with a brief natural shoulder or breath response."
+        },
+        {
+          "id": "ig-focused",
+          "label": "IG - Focused on task",
+          "text": "{A} keeps attention on the specified activity with small gaze corrections and purposeful, restrained gestures."
+        },
+        {
+          "id": "ig-calm",
+          "label": "IG - Calm / reassuring",
+          "text": "{A} uses gentle eye contact, measured movement, and an unforced expression with no exaggerated emotional shift."
+        },
+        {
+          "id": "ig-bold",
+          "label": "IG - Bold editorial",
+          "text": "{A} uses a steady gaze, composed chin position, and controlled confident movement without a rigid frozen pose."
+        },
+        {
+          "id": "ig-shy",
+          "label": "IG - Reserved / shy",
+          "text": "{A} briefly glances away, makes a small natural posture adjustment, and returns toward a soft expression."
+        }
+      ]
+    },
+    {
+      "id": "action",
+      "label": "Character movement",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 100,
+      "default": [],
+      "options": [
+        {
+          "id": "ig-stand",
+          "label": "IG - Stand and adjust",
+          "text": "{A} remains standing while making small natural balance and posture adjustments without taking unnecessary steps."
+        },
+        {
+          "id": "ig-lean",
+          "label": "IG - Light supported lean",
+          "text": "If the reference includes a suitable support, {A} makes a light comfortable lean with visible contact and stable balance."
+        },
+        {
+          "id": "ig-rise",
+          "label": "IG - Rise from seat",
+          "text": "{A} leans forward slightly, transfers weight through the feet, and rises from the referenced seat smoothly."
+        },
+        {
+          "id": "ig-reach",
+          "label": "IG - Reach and return",
+          "text": "{A} reaches toward the specified existing item with a plausible arm path, completes the action, and returns naturally."
+        },
+        {
+          "id": "ig-lift",
+          "label": "IG - Lift supplied item",
+          "text": "{A} takes a believable grip on the supplied item, lifts it with appropriate weight, and holds it steadily."
+        },
+        {
+          "id": "ig-turn-walk",
+          "label": "IG - Turn and walk away",
+          "text": "{A} makes a natural pivot and takes a few complete steps away in the user-specified available direction."
+        },
+        {
+          "id": "ig-side-step",
+          "label": "IG - Small side step",
+          "text": "{A} makes one modest side step, transfers weight fully, and settles without sliding the feet."
+        },
+        {
+          "id": "ig-look-turn",
+          "label": "IG - Look then body turn",
+          "text": "{A}'s gaze leads a small head turn, followed smoothly by the shoulders and torso, with natural balance."
+        },
+        {
+          "id": "ig-greet",
+          "label": "IG - Greet partner",
+          "text": "{A} notices {B}, turns slightly toward them, and gives a restrained greeting gesture without invented dialogue.",
+          "requiresSubjects": 2
+        },
+        {
+          "id": "ig-handoff",
+          "label": "IG - Item handoff",
+          "text": "{A} offers the supplied item to {B}; both maintain distinct hands and believable grip transfer before releasing.",
+          "requiresSubjects": 2
+        }
+      ]
+    },
+    {
+      "id": "time",
+      "label": "Time & pace",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 50,
+      "default": [],
+      "options": [
+        {
+          "id": "ig-brisk",
+          "label": "IG - Brisk but readable",
+          "text": "Use a brisk natural cadence with one clear main action, complete contact points, and a controlled ending."
+        },
+        {
+          "id": "ig-compact",
+          "label": "IG - Compact gesture",
+          "text": "Fit a small simple gesture comfortably inside {duration} seconds rather than rushing several complex actions."
+        },
+        {
+          "id": "ig-relaxed",
+          "label": "IG - Relaxed creator pace",
+          "text": "Allow small natural pauses around the main gesture while keeping the performance alive throughout."
+        },
+        {
+          "id": "ig-rhythmic",
+          "label": "IG - Steady rhythmic timing",
+          "text": "Use an even repeated physical rhythm without assuming an external soundtrack or exact beat synchronization."
+        },
+        {
+          "id": "ig-deliberate",
+          "label": "IG - Deliberate demonstration",
+          "text": "Slow the performance enough to show each meaningful contact and outcome clearly, retaining natural real-time physics."
+        }
+      ]
+    },
+    {
+      "id": "ambience",
+      "label": "Soundscape",
+      "target": "overall_soundscape",
+      "multi": false,
+      "order": 160,
+      "default": [],
+      "options": [
+        {
+          "id": "ig-studio",
+          "label": "IG - Quiet studio",
+          "text": "Use low neutral room tone appropriate to the supplied studio-like space, with no generated speech or music."
+        },
+        {
+          "id": "ig-home",
+          "label": "IG - Subtle home ambience",
+          "text": "Use restrained indoor room tone consistent with the user-described space, without inventing appliances or off-screen voices."
+        },
+        {
+          "id": "ig-cafe",
+          "label": "IG - Cafe texture",
+          "text": "When a cafe soundscape is requested, use low indistinct room activity and small distant contact sounds without intelligible speech."
+        },
+        {
+          "id": "ig-city",
+          "label": "IG - Urban exterior",
+          "text": "When an urban exterior is specified, use restrained distant city activity, keeping the foreground action clear and avoiding sudden horns."
+        },
+        {
+          "id": "ig-garden",
+          "label": "IG - Garden / park",
+          "text": "When a garden or park is specified, use soft outdoor air and occasional restrained natural sounds without a dense unrelated chorus."
+        },
+        {
+          "id": "ig-water",
+          "label": "IG - Waterfront",
+          "text": "When a waterfront is specified, use soft water movement and gentle open-air ambience without changing the visible setting."
+        },
+        {
+          "id": "ig-kitchen",
+          "label": "IG - Quiet kitchen",
+          "text": "Use restrained kitchen room tone and only physical sounds matched to the specified visible activity."
+        },
+        {
+          "id": "ig-dry",
+          "label": "IG - Dry close recording",
+          "text": "Use a quiet, dry acoustic bed with minimal reverberation and no invented dialogue or background song."
+        }
+      ]
+    },
+    {
+      "id": "music",
+      "label": "Music",
+      "target": "non_diegetic_music",
+      "multi": false,
+      "order": 170,
+      "default": [],
+      "options": [
+        {
+          "id": "ig-pop",
+          "label": "IG - Original light pop instrumental",
+          "text": "Generate an original instrumental pop bed with a light steady mid-tempo pulse, restrained bass, and no vocals or recognizable melody."
+        },
+        {
+          "id": "ig-house",
+          "label": "IG - Original soft house instrumental",
+          "text": "Generate an original understated house-style instrumental with a steady dance pulse, soft percussion, and restrained synth texture; no vocals."
+        },
+        {
+          "id": "ig-lofi",
+          "label": "IG - Original lo-fi instrumental",
+          "text": "Generate an original relaxed lo-fi instrumental with a soft slow-to-mid-tempo groove, muted keys, and restrained percussion; no vocals."
+        },
+        {
+          "id": "ig-funk",
+          "label": "IG - Original light funk instrumental",
+          "text": "Generate an original light funk instrumental with a clean rhythmic bass figure and modest percussion at a medium tempo; no vocals."
+        },
+        {
+          "id": "ig-rnb",
+          "label": "IG - Original mellow R&B instrumental",
+          "text": "Generate an original mellow R&B-style instrumental with warm chords, restrained bass, and a relaxed medium-slow pulse; no vocals."
+        },
+        {
+          "id": "ig-cinematic",
+          "label": "IG - Original restrained cinematic bed",
+          "text": "Generate an original slow cinematic instrumental with sustained soft textures, modest piano, and no dramatic swell or vocals."
+        },
+        {
+          "id": "ig-piano",
+          "label": "IG - Original reflective piano",
+          "text": "Generate an original sparse piano instrumental at a slow tempo with gentle dynamics and no vocals."
+        },
+        {
+          "id": "ig-percussion",
+          "label": "IG - Original percussion groove",
+          "text": "Generate an original light percussion-only groove at a medium tempo with space around physical sound and no vocals."
+        },
+        {
+          "id": "ig-licensed-later",
+          "label": "IG - Add chosen music in editor",
+          "text": "No generated background music. Finishing plan: add a separately supplied or appropriately licensed track later; no source audio or trending song is assumed to be copied."
+        }
+      ]
+    },
+    {
+      "id": "voice",
+      "label": "Voice treatment",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 130,
+      "default": [],
+      "options": [
+        {
+          "id": "ig-script-later",
+          "label": "IG - Exact script added separately",
+          "text": "Do not invent spoken words or lip-sync. Finishing plan: record or supply the exact user-approved narration separately, then synchronize it where needed."
+        },
+        {
+          "id": "ig-no-words",
+          "label": "IG - Expressive without speech",
+          "text": "Use facial expression and gestures without articulated speech, sung lyrics, or invented dialogue."
+        },
+        {
+          "id": "ig-spoken-script",
+          "label": "IG - Supplied speech only",
+          "text": "Generate speech only when the user separately supplies exact words, language, speaker order, and delivery using the official dialogue syntax; otherwise remain nonverbal."
+        },
+        {
+          "id": "ig-lip-sync-later",
+          "label": "IG - Supplied lip-sync audio later",
+          "text": "Treat lip-sync as a separate explicitly supplied audio and synchronization task; do not infer words or audio reuse from a reference video's mere presence."
+        }
+      ]
+    }
+  ]
+}
