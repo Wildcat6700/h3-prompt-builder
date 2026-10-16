@@ -18,7 +18,7 @@
  <nav class="tabs" role="tablist" aria-label="Workspace"><button id="builderTab" role="tab" aria-selected="true" aria-controls="builderPanel" tabindex="0">BUILDER</button><button id="handoffTab" role="tab" aria-selected="false" aria-controls="handoffPanel" tabindex="-1">HANDOFF</button></nav>
  <main id="builderPanel" role="tabpanel" aria-labelledby="builderTab" class="layout">
  <div class="stack">
-  <section class="card" id="libraryPicker"><div class="cardhead"><h2>JSON libraries</h2><span class="badge">SWITCH ANYTIME</span></div><label class="field" for="librarySource">Choose JSON library</label><select id="librarySource" aria-describedby="librarySourceHelp"><option value="saved">My saved library</option><option value="original">Original options</option><option value="instagram">Original + Instagram</option><option value="xprompt">Original + XPROMPT</option><option value="combined">Original + Instagram + XPROMPT</option><option value="example">Original + example additions</option></select><div class="librarybar" style="margin-top:12px"><button id="reloadSource" type="button">Update selected JSON</button></div><p class="note" id="librarySourceHelp">Original options are included in every view. Each view remembers its choices; switching keeps your saved libraries and reference notes. Upload JSON adds to My saved library. Hosted files load only when selected, then stay cached on this device.</p><div id="libraryStatus" class="status" role="status" aria-live="polite"></div></section>
+  <section class="card" id="libraryPicker"><div class="cardhead"><h2>JSON libraries</h2><span class="badge">SWITCH ANYTIME</span></div><label class="field" for="librarySource">Choose JSON library</label><select id="librarySource" aria-describedby="librarySourceHelp"><option value="saved">My saved library</option><option value="original">Original options</option><option value="instagram">Original + Instagram</option><option value="xprompt-only">XPROMPT only</option><option value="xprompt">Original + XPROMPT</option><option value="combined">Original + Instagram + XPROMPT</option><option value="example">Original + example additions</option></select><div class="librarybar" style="margin-top:12px"><button id="reloadSource" type="button">Update selected JSON</button></div><p class="note" id="librarySourceHelp">Choose XPROMPT only for just that file. Views marked Original + include the original options. Each view remembers its choices; switching keeps your saved libraries and reference notes. Upload JSON adds to My saved library. Hosted files load only when selected, then stay cached on this device.</p><div id="libraryStatus" class="status" role="status" aria-live="polite"></div></section>
 
   <section class="card"><div class="cardhead"><h2><span class="number">01</span>References & scene</h2><span class="badge" id="referenceCount"></span></div><p class="note">Reference order: subjects first, then a separate environment image. Links are notes only; this page does not fetch or upload media.</p>
    <div class="reference"><label class="field">Picture 1 · primary subject<input id="subjectA" type="text" maxlength="240" placeholder="the main character" autocomplete="off"></label><label class="field">Original image link<input id="imageAUrl" type="url" placeholder="https://drive.google.com/…" autocomplete="off"></label></div>
@@ -62,6 +62,7 @@ const SOURCES=[
  {id:'saved',label:'My saved library',files:[]},
  {id:'original',label:'Original options',files:[]},
  {id:'instagram',label:'Original + Instagram',files:['instagram-prompt-creator.json']},
+ {id:'xprompt-only',label:'XPROMPT only',files:['XPROMPT.json'],only:true},
  {id:'xprompt',label:'Original + XPROMPT',files:['XPROMPT.json']},
  {id:'combined',label:'Original + Instagram + XPROMPT',files:['instagram-prompt-creator.json','XPROMPT.json']},
  {id:'example',label:'Original + example additions',files:['example-options.json']}
@@ -140,6 +141,12 @@ function assemble(api,builtin,packs,existing=null){
  for(const pack of packs)next=api.mergePack(next,pack);
  return next;
 }
+function assembleOnly(api,packs,existing=null){
+ if(!packs.length&&!existing)throw Error('Choose a JSON file.');
+ let next=api.validatePack(existing||packs[0]);
+ for(const pack of existing?packs:packs.slice(1))next=api.mergePack(next,pack);
+ return next;
+}
 function compatibleSelections(selections,library){
  const result={};for(const group of library.groups){const old=selections?.[group.id];if(!Array.isArray(old))continue;
   const valid=old.filter(id=>group.options.some(o=>o.id===id));result[group.id]=old.length&&!valid.length?(group.default||[]):valid;
@@ -160,7 +167,7 @@ async function loadPacks(sourceId,fetcher=globalThis.fetch){
  }
  return packs;
 }
-globalThis.H3Libraries={SOURCES,parseLibraryText,adaptPack,assemble,compatibleSelections,loadPacks};
+globalThis.H3Libraries={SOURCES,parseLibraryText,adaptPack,assemble,assembleOnly,compatibleSelections,loadPacks};
 })();
 </script>
 <script id="app-code">
@@ -256,11 +263,11 @@ async function switchLibrary(sourceId,refresh=false){
   if(sourceId==='original')next=clone(builtin);
   else if(profiles[sourceId]&&!refresh){next=clone(profiles[sourceId].library);recovered=profiles[sourceId].recoveredEOF===true;}
   else if(sourceId==='saved')next=clone(builtin);
-  else{const packs=await Libraries.loadPacks(sourceId);next=Libraries.assemble(API,builtin,packs,refresh?profiles[sourceId]?.library:null);recovered=packs.some(p=>p._recoveredEOF)||!!(refresh&&profiles[sourceId]?.recoveredEOF);}
+  else{const packs=await Libraries.loadPacks(sourceId);next=source.only?Libraries.assembleOnly(API,packs,refresh?profiles[sourceId]?.library:null):Libraries.assemble(API,builtin,packs,refresh?profiles[sourceId]?.library:null);recovered=packs.some(p=>p._recoveredEOF)||!!(refresh&&profiles[sourceId]?.recoveredEOF);}
   const choices=profiles[sourceId]?.selections||Libraries.compatibleSelections(state.selections,next);
   const nextState=normalizeState({...state,selections:choices},next);
   activeSource=sourceId;library=next;state=nextState;currentRecovery=recovered;renderAll();persist();
-  message('libraryStatus',source.label+' loaded. '+library.groups.reduce((n,g)=>n+g.options.length,0)+' options; original options included.'+(recovered?' The file ended early; complete entries only. Missing content cannot be restored. The original file was not changed.':''),recovered);
+  message('libraryStatus',source.label+' loaded. '+library.groups.reduce((n,g)=>n+g.options.length,0)+' options; '+(source.only?'this JSON only.':'original options included.')+(recovered?' The file ended early; complete entries only. Missing content cannot be restored. The original file was not changed.':''),recovered);
  }catch{message('libraryStatus','Could not load this JSON library. Check the connection and file format. Your current library and choices were kept.',true)}
  finally{sourceBusy=false;renderSource()}
 }
