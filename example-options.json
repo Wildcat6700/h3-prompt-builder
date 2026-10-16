@@ -11,9 +11,18 @@
         {
           "id": "slow-crane-rise",
           "label": "Slow crane rise",
-          "text": "The camera rises gradually on a smooth crane path, revealing more of the reference environment while keeping the subject in frame."
+          "text": "The camera rises vertically over a short crane path at slow speed, easing both the start and stop. Keep the optical axis aimed toward the same subject center and hold focal length fixed as continuous perspective reveals more of the supplied surroundings. Preserve safe head and limb margins; do not add a pan, sudden zoom, camera roll, or an invented part of the location.",
+          "publicAudit": 2,
+          "tags": [
+            "camera:moving"
+          ],
+          "excludes": [
+            "camera:static"
+          ],
+          "requiresAny": []
         }
-      ]
+      ],
+      "publicAudit": 2
     },
     {
       "id": "weather",
@@ -25,9 +34,15 @@
         {
           "id": "gentle-breeze",
           "label": "Gentle breeze",
-          "text": "A gentle breeze moves loose fabric and nearby foliage subtly, without changing the subject or scene."
+          "text": "A gentle breeze moves loose fabric and nearby foliage subtly, without changing the subject or scene.",
+          "publicAudit": 2,
+          "tags": [],
+          "excludes": [],
+          "requiresAny": []
         }
-      ]
+      ],
+      "publicAudit": 2
     }
-  ]
+  ],
+  "publicAudit": 2
 }
