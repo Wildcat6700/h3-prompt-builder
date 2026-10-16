@@ -1,0 +1,267 @@
+{
+  "schema": "h3-ref-prompt-builder/1",
+  "meta": {
+    "name": "MiniMax H3 Reference Prompt Builder",
+    "model": "minimax-h3-max-reference-to-video",
+    "storage_key": "h3_ref_prompt_builder_v1",
+    "download_extension": "txt",
+    "notes": [
+      "This file is both the seed data and the full build contract. A builder must run correctly against it with zero hardcoded group labels, option labels or clause text.",
+      "Uploading a replacement file must re-render the whole app from the new object. Only meta.storage_key stays fixed.",
+      "If a top-level key is absent, fall back to the embedded copy; if a group is absent, drop that group silently.",
+      "Typos must surface: parse with JSON.parse so malformed uploads throw a catchable runtime error instead of failing quietly."
+    ]
+  },
+  "ui": {
+    "tabs": ["BUILDER", "HANDOFF"],
+    "handoffSource": "live_state",
+    "minTapTargetPx": 44,
+    "collapsibleGroups": true,
+    "persistence": "localStorage",
+    "bar": ["copy", "download", "share", "reset"],
+    "renderOrder": "groups in array order",
+    "incompatibleChips": "dimmed, never hidden, still tappable"
+  },
+  "output": {
+    "format": "six labelled fields, label on its own line, body below, one blank line between fields",
+    "fieldOrder": ["subject_definitions", "summary", "retention_analysis", "detailed_description", "overall_soundscape", "non_diegetic_music"],
+    "noEmptyField": true
+  },
+  "references": {
+    "orderRule": "Picture order is always subjects first, then environment. Environment index = subject count + 1.",
+    "subjectA": { "label": "<Picture 1>", "role": "subject", "ordinal": "first", "retention": "fully_preserved" },
+    "subjectB": { "label": "<Picture 2>", "role": "subject", "ordinal": "second", "retention": "fully_preserved", "requires": "second_subject" },
+    "environment": { "label": "<Picture {envIndex}>", "role": "environment", "retention": "fully_preserved" },
+    "motion": { "label": "<Video 1>", "role": "motion", "retention": "weak_reference", "flag": "motion_reference_video", "demotion": "motion and timing only, never subject, wardrobe or room" }
+  },
+  "roleTypes": {
+    "futa":  { "noun": "futanari", "long": "a futanari (a woman with a penis)", "hasPenis": true,  "hasVulva": false, "note": "futa is a woman with a penis and must never be described as having a vulva" },
+    "woman": { "noun": "woman",    "long": "a woman",                        "hasPenis": false, "hasVulva": true,  "penetratorResolvesTo": "strap-on" },
+    "man":   { "noun": "man",      "long": "a man",                          "hasPenis": true,  "hasVulva": false }
+  },
+  "tokens": {
+    "list": ["{A}", "{B}", "{Ahe}", "{Ahim}", "{Aher}", "{Bhe}", "{Bhim}", "{Bher}", "{Avul}", "{Bvul}", "{Apen}", "{Bpen}"],
+    "rules": {
+      "{A}": "solo: 'She'. Two subjects: 'The {nounA}'; if both roles are the same type, 'The first {nounA}'.",
+      "{B}": "two subjects only: 'the {nounB}'; if both roles are the same type, 'the second {nounB}'.",
+      "{Ahe}": "'he' when role is man, otherwise 'she'",
+      "{Bhe}": "'he' when role is man, otherwise 'she'",
+      "{Aher}": "'his' when role is man, otherwise 'her'",
+      "{Bher}": "'his' when role is man, otherwise 'her'",
+      "{Ahim}": "'him' when role is man, otherwise 'her'",
+      "{Bhim}": "'him' when role is man, otherwise 'her'",
+      "{Apen}": "'strap-on' when role is woman, otherwise 'penis'",
+      "{Bpen}": "'strap-on' when role is woman, otherwise 'penis'",
+      "{Avul}": "' vulva' when role is woman, otherwise empty string",
+      "{Bvul}": "' vulva' when role is woman, otherwise empty string"
+    },
+    "applyTo": ["rel.v", "act.v"],
+    "capitaliseResolvedLine": true
+  },
+  "compatibility": {
+    "needRules": {
+      "Apenis": { "alwaysSatisfiable": true, "via": "strap-on" },
+      "Bpenis": { "requiresAny": ["man", "futa"], "on": "B" },
+      "Avulva": { "requiresAny": ["woman"], "on": "A" },
+      "Bvulva": { "requiresAny": ["woman"], "on": "B" },
+      "Bbreast": { "requiresAny": ["woman", "futa"], "on": "B" }
+    },
+    "soloActsNeedNoSecondRole": true,
+    "nonSoloActsRequireSecondSubject": true,
+    "actsNeverHidden": true,
+    "incompatibleActsDimmed": true,
+    "tapIncompatibleSwitchesCastToFirstCompatible": true
+  },
+  "emotionLayer": {
+    "groups": ["mood", "tells", "vo", "arc"],
+    "independent": true,
+    "alwaysAvailableAntiStiff": "scaffold.anti_stiff_base",
+    "emissionOrderInDetailedDescription": ["mood", "tells", "vo", "arc", "beats"]
+  },
+  "scaffold": {
+    "binding": [
+      { "text": "This frame is already the target scene — do not re-imagine it." },
+      { "text": "<Picture 1> is exactly the first subject as supplied, unchanged." },
+      { "text": "<Picture 2> is exactly the second subject as supplied, unchanged.", "requires": "second_subject" },
+      { "text": "<Picture {envIndex}> is exactly the room as supplied, unchanged." },
+      { "text": "<Video 1> is a motion reference only: copy its movement and timing, never its subject, its wardrobe or its room.", "flag": "motion_reference_video" }
+    ],
+    "watermark_clause": "No watermark, no logo and no text overlay anywhere in the frame.",
+    "anti_stiff_base": "Nothing about the body is ever still. Breath moves the ribs, weight shifts, fingers flex and re-grip, the jaw slackens and tightens, she blinks, swallows and sways. No pose is held frozen for more than a moment.",
+    "closing_permanence": "Permanence: the subjects, the room and the light stay identical from the first frame to the last — nothing drifts, morphs or re-renders.",
+    "avoid": "AVOID: face morphing, identity drift, changing room or set dressing, warping hands and extra fingers, mannequin stiffness, the motion reference hijacking subject or room, watermarks and text overlays.",
+    "priority_line": "Priority: identity and environment always beat the motion reference.",
+    "mirror_line": "Both partners carry the same tells at the same beats.",
+    "soundscape_fallback": "clean close room tone",
+    "music_on": "A low ambient music bed sits under everything — sparse, warm, unobtrusive, no melody hooks, no drops.",
+    "music_off": "No music. Room tone and body sound only."
+  },
+  "fieldTemplates": {
+    "subject_definitions": {
+      "subjectLine": "<Picture {index}> is the {ordinal} subject — {longDesc}. Identity, face, body, skin tone, hair and proportions are fully_preserved.",
+      "environmentLine": "<Picture {envIndex}> is the environment{settingClause}. Set dressing, surfaces, props, light direction and colour temperature are fully_preserved."
+    },
+    "summary": {
+      "template": "A {duration}s reference-to-video clip: {bits}. {subjectCount} supplied subject picture{plural} plus one supplied environment picture lock the identity, the room and the light. {motionClause}",
+      "bits": ["cast.label", "act.label", "mood.label + ' mood'", "setting.label", "angle.label + ' angle'", "time.label"],
+      "motionClauseOn": "The supplied motion video drives movement and timing only.",
+      "motionClauseOff": "Nothing outside the supplied frames is invented.",
+      "durationRule": "max seconds parsed from arc.beats when timecoded_beats is on, clamped 5-15, default 10"
+    },
+    "retention_analysis": {
+      "subjectLine": "<Picture {index}>: fully_preserved — {ordinal} subject identity, face, body, skin, hair, proportions.",
+      "environmentLine": "<Picture {envIndex}>: fully_preserved — environment, dressing, surfaces, props, light direction, colour temperature.",
+      "motionLine": "<Video 1>: weak_reference — movement, rhythm and timing only. It must never overwrite the subjects or the room.",
+      "priorityLine": "scaffold.priority_line"
+    },
+    "overall_soundscape": {
+      "base": "setting.amb + 'Vocally, ' + vo.v",
+      "fallback": "scaffold.soundscape_fallback",
+      "override": "pack.wet_handjob_audio replaces the entire field when selected"
+    },
+    "non_diegetic_music": {
+      "on": "scaffold.music_on",
+      "off": "scaffold.music_off",
+      "flag": "low_ambient_music_bed"
+    }
+  },
+  "assembly": {
+    "detailed_description": [
+      { "id": "binding",              "source": "scaffold", "key": "binding" },
+      { "id": "watermark_clause",     "source": "scaffold", "key": "watermark_clause", "flag": "no_watermark" },
+      { "id": "anti_stiff_base",      "source": "scaffold", "key": "anti_stiff_base" },
+      { "id": "position_relation",    "source": "group", "group": "rel", "capitalise": true, "suffix": "." },
+      { "id": "shot_line",            "source": "compose", "from": ["lens", "angle"], "prefix": "Shot on ", "suffix": "." },
+      { "id": "framing",              "source": "group", "group": "frame", "prefix": "Framing: ", "suffix": "." },
+      { "id": "camera_motion",        "source": "group", "group": "motion", "prefix": "Camera: ", "suffix": "." },
+      { "id": "time",                 "source": "group", "group": "time", "prefix": "Time: ", "suffix": "." },
+      { "id": "lighting",             "source": "group", "group": "light", "prefix": "Light: ", "suffix": "." },
+      { "id": "nearest_element_line", "source": "optionField", "group": "angle", "field": "near", "capitalise": true, "suffix": "." },
+      { "id": "shaft_direction_line", "source": "optionField", "group": "angle", "field": "shaft", "capitalise": true, "suffix": "." },
+      { "id": "act",                  "source": "group", "group": "act", "capitalise": true, "suffix": "." },
+      { "id": "emotion",              "source": "group", "group": "mood", "prefix": "Emotion: ", "suffix": "." },
+      { "id": "arousal_tells",        "source": "multiJoin", "group": "tells", "prefix": "Involuntary arousal tells throughout: ", "suffix": ".", "mirrorFlag": "partner_mirrors_reactions", "mirrorLine": "scaffold.mirror_line" },
+      { "id": "vocal_style",          "source": "group", "group": "vo", "prefix": "Vocal style: ", "suffix": "." },
+      { "id": "arousal_arc",          "source": "group", "group": "arc", "prefix": "Arousal arc: ", "suffix": "." },
+      { "id": "beats",                "source": "optionField", "group": "arc", "field": "beats", "flag": "timecoded_beats", "prefix": "Beats: ", "join": " " },
+      { "id": "fluid",                "source": "group", "group": "fluid", "prefix": "Fluid: ", "suffix": "." },
+      { "id": "detail_packs",         "source": "multiRaw", "group": "pack", "excludeDuplicateOf": "anti_stiff_base" },
+      { "id": "closing_permanence",   "source": "scaffold", "key": "closing_permanence" },
+      { "id": "avoid",                "source": "scaffold", "key": "avoid" }
+    ],
+    "joinWith": "\n",
+    "skipEmpty": true
+  },
+  "fields": [
+    { "key": "subject_definitions",  "order": 1, "build": "fieldTemplates.subject_definitions" },
+    { "key": "summary",              "order": 2, "build": "fieldTemplates.summary" },
+    { "key": "retention_analysis",   "order": 3, "build": "fieldTemplates.retention_analysis" },
+    { "key": "detailed_description", "order": 4, "build": "assembly.detailed_description" },
+    { "key": "overall_soundscape",   "order": 5, "build": "fieldTemplates.overall_soundscape" },
+    { "key": "non_diegetic_music",   "order": 6, "build": "fieldTemplates.non_diegetic_music" }
+  ],
+  "defaults": {
+    "cast": "futa_solo",
+    "rel": "none",
+    "act": "solo_stroking",
+    "mood": "none",
+    "arc": "none",
+    "tells": [],
+    "vo": "none",
+    "angle": "eye_level",
+    "motion": "handheld_jitter",
+    "lens": "50mm",
+    "frame": "hips_to_knees",
+    "light": "soft_daylight",
+    "time": "real_time",
+    "setting": "bedroom",
+    "fluid": "none",
+    "pack": [],
+    "flags": ["no_watermark", "motion_reference_video"],
+    "open": ["output", "cast", "act"]
+  },
+  "groups": [
+    {
+      "id": "cast",
+      "label": "Cast",
+      "type": "cast",
+      "binding": true,
+      "opts": [
+        { "id": "futa_solo",   "v": "futa_solo",   "l": "Futanari solo",       "d": "One futanari alone in frame.", "roles": { "A": "futa" } },
+        { "id": "futa_futa",   "v": "futa_futa",   "l": "Futanari + Futanari", "d": "Two futanari, each a woman with a penis.", "roles": { "A": "futa", "B": "futa" } },
+        { "id": "futa_woman",  "v": "futa_woman",  "l": "Futanari + Woman",    "d": "A futanari with a woman.", "roles": { "A": "futa", "B": "woman" } },
+        { "id": "woman_futa",  "v": "woman_futa",  "l": "Woman + Futanari",    "d": "A woman with a futanari.", "roles": { "A": "woman", "B": "futa" } },
+        { "id": "futa_man",    "v": "futa_man",    "l": "Futanari + Man",      "d": "A futanari with a man.", "roles": { "A": "futa", "B": "man" } },
+        { "id": "man_futa",    "v": "man_futa",    "l": "Man + Futanari",      "d": "A man with a futanari.", "roles": { "A": "man", "B": "futa" } },
+        { "id": "woman_woman", "v": "woman_woman", "l": "Woman + Woman",       "d": "Two women.", "roles": { "A": "woman", "B": "woman" } },
+        { "id": "man_woman",   "v": "man_woman",   "l": "Man + Woman",         "d": "A man with a woman.", "roles": { "A": "man", "B": "woman" } }
+      ]
+    },
+    {
+      "id": "rel",
+      "label": "Position relation",
+      "opts": [
+        { "id": "none", "v": "", "l": "None", "d": "No relation line." },
+        { "id": "face_to_face", "v": "They are chest to chest, face to face", "l": "Face to face", "d": "Front to front, eye contact." },
+        { "id": "a_behind_b", "v": "{A} is behind {B}", "l": "A behind B", "d": "A takes the back position." },
+        { "id": "b_behind_a", "v": "{B} is behind {A}", "l": "B behind A", "d": "B takes the back position." },
+        { "id": "standing_over", "v": "{A} stands over {B}, who kneels", "l": "Standing over", "d": "Height difference, A above." },
+        { "id": "side_by_side", "v": "They lie side by side, both facing the lens", "l": "Side by side", "d": "Bodies parallel to the camera." },
+        { "id": "a_seated", "v": "{A} sits while {B} stands over {Ahim}", "l": "A seated", "d": "A below, B above." },
+        { "id": "b_seated", "v": "{B} sits while {A} stands over {Bhim}", "l": "B seated", "d": "B below, A above." },
+        { "id": "back_to_back", "v": "They are back to back", "l": "Back to back", "d": "Mirrored, facing opposite directions." },
+        { "id": "a_on_top", "v": "{A} is on top, bearing down on {B}", "l": "A on top", "d": "A carries the weight." }
+      ]
+    },
+    {
+      "id": "act",
+      "label": "Act / position",
+      "type": "act",
+      "opts": [
+        { "id": "none", "v": "", "l": "None", "d": "No act line." },
+        { "id": "solo_stroking", "v": "{A} stands with {Aher} weight settled on one hip and strokes {Aher} own {Apen} with a closed fist, slow and firm, thumb dragging over the glans on every upstroke", "l": "Solo stroking", "d": "She works her own shaft.", "needs": [], "solo": true },
+        { "id": "seated_hip_roll", "v": "{A} leans back on both hands, hips lifted, {Aher} {Apen} standing up off {Aher} body, and rolls {Aher} hips in a slow figure of eight", "l": "Seated hip roll", "d": "Hips circling, shaft swinging.", "needs": [], "solo": true },
+        { "id": "lying_down_stroke", "v": "{A} lies back and works {Aher} own {Apen} with long slow strokes, knees fallen apart", "l": "Lying down stroke", "d": "On her back, legs open.", "needs": [], "solo": true },
+        { "id": "handjob", "v": "{B} wraps {Bher} hand around {Aher} {Apen} and strokes it with a wet closed fist, twisting at the top", "l": "Handjob", "d": "B strokes A with her hand.", "needs": ["Apenis"] },
+        { "id": "blowjob", "v": "{B} kneels and takes {Aher} {Apen} into {Bher} mouth, lips sealing around the shaft while {Bher} hand works the base", "l": "Blowjob", "d": "B sucks A off.", "needs": ["Apenis"] },
+        { "id": "titfuck", "v": "{Aher} {Apen} slides between {Bher} breasts, {B} pressing them together around the shaft and rocking", "l": "Titfuck", "d": "Shaft between her breasts.", "needs": ["Apenis", "Bbreast"] },
+        { "id": "missionary", "v": "{A} penetrates {B} face to face, {Aher} {Apen} sinking into {Bher}{Bvul}, hips meeting in slow deep thrusts", "l": "Missionary", "d": "Front to front, A on top.", "needs": ["Apenis"] },
+        { "id": "cowgirl", "v": "{B} straddles {A} and lowers onto {Aher} {Apen}, {Bher} hips rolling in a slow grind", "l": "Cowgirl", "d": "B on top, riding.", "needs": ["Apenis"] },
+        { "id": "doggystyle", "v": "{B} on all fours, {A} behind gripping {Bher} hips and driving into {B} from behind, {Bher} back arched deep", "l": "Doggystyle", "d": "B on all fours, A behind.", "needs": ["Apenis"] },
+        { "id": "side_from_behind", "v": "{A} and {B} lie on their sides, {A} curled behind {B}, entering {B} from behind while both bodies rock as one", "l": "Side from behind", "d": "Spooning, both on their sides.", "needs": ["Apenis"] },
+        { "id": "standing_from_behind", "v": "{A} takes {B} from behind against a wall, {Bher} cheek pressed to the plaster, {Aher} hips driving up into {B}", "l": "Standing from behind", "d": "Against a wall, standing.", "needs": ["Apenis"] },
+        { "id": "standing_carry", "v": "{A} holds {B} up against {Ahim}, {Bher} legs locked around {Aher} waist, {B} bouncing on {Aher} {Apen}", "l": "Standing carry", "d": "A carries B in the air.", "needs": ["Apenis"] },
+        { "id": "cum_on_back", "v": "{A} pulls out and comes across {Bher} lower back and spine", "l": "Cum on back", "d": "Finishing across the back.", "needs": ["Apenis"] },
+        { "id": "cum_on_face", "v": "{A} pulls out and comes across {Bher} face and open mouth", "l": "Cum on face", "d": "Finishing on the face.", "needs": ["Apenis"] },
+        { "id": "cum_on_breasts", "v": "{A} pulls out and comes across {Bher} breasts and nipples, pooling in the cleavage", "l": "Cum on breasts", "d": "Finishing on the chest.", "needs": ["Apenis"] },
+        { "id": "creampie", "v": "{A} buries deep and comes inside {B}, staying sheathed through every pulse before slipping out", "l": "Creampie", "d": "Finishing inside.", "needs": ["Apenis"] },
+        { "id": "anal", "v": "{A} pushes into {Bher} anus, the sphincter gripping and dragging on the shaft with each thrust", "l": "Anal", "d": "Anal penetration.", "needs": ["Apenis"] },
+        { "id": "scissoring", "v": "{A} and {B} scissoring, {Aher} vulva pressed flat to {Bher} vulva, hips grinding in slow circles", "l": "Scissoring", "d": "Two women, vulva to vulva.", "needs": ["Avulva", "Bvulva"] },
+        { "id": "frotting", "v": "{A} and {B} pressed together, both {Apen}s rubbing side by side in {Aher} fist", "l": "Frotting", "d": "Two shafts in one hand.", "needs": ["Apenis", "Bpenis"] },
+        { "id": "reverse_cowgirl", "v": "{B} straddles {A} facing away, taking {Aher} {Apen} from behind while {A} watches {Bher} back", "l": "Reverse cowgirl", "d": "B on top facing away.", "needs": ["Apenis"] },
+        { "id": "69", "v": "{A} lies back while {B} straddles {Aher} face, and {A} keeps stroking {Aher} own {Apen}", "l": "69", "d": "Mouth on her, hand on herself.", "needs": ["Apenis"] },
+        { "id": "fingering", "v": "{B} kneels between {Aher} legs and works two fingers into {Aher}{Avul}, thumb circling the clitoris", "l": "Fingering", "d": "B fingers A.", "needs": [] },
+        { "id": "footjob", "v": "{A} stands over {B}, {B} gripping {Aher} ankles as {A} slides {Aher} {Apen} between {Bher} feet", "l": "Footjob", "d": "Feet around the shaft.", "needs": ["Apenis"] },
+        { "id": "mutual", "v": "{A} and {B} face to face, each working the other in a slow mirrored rhythm", "l": "Mutual", "d": "Both stroking each other.", "needs": [] },
+        { "id": "double_pleasure", "v": "{A} enters {B} while {Aher} free hand reaches around and works {Bher} own {Apen} in time with the thrusts", "l": "Double pleasure", "d": "Penetration plus a hand.", "needs": ["Apenis", "Bpenis"] },
+        { "id": "leg_up", "v": "{A} lifts {Bher} leg onto {Aher} shoulder and drives deep, both of them watching the shaft slide in and out", "l": "Leg up", "d": "Leg over the shoulder.", "needs": ["Apenis"] },
+        { "id": "bent_over", "v": "{B} is bent over the edge of the surface, {A} standing behind with both hands on {Bher} hips, taking {B} in long strokes", "l": "Bent over", "d": "Bent over a surface.", "needs": ["Apenis"] },
+        { "id": "seated_blowjob", "v": "{A} sits and leans back, {B} kneeling between {Aher} thighs with {Bher} mouth on the shaft and both hands gripping {Aher} hips", "l": "Seated blowjob", "d": "A seated, B kneeling.", "needs": ["Apenis"] },
+        { "id": "side_69", "v": "{A} and {B} head to tail on their sides, each with a mouth full and a hand working the shaft", "l": "Side 69", "d": "Both lying, head to tail.", "needs": ["Apenis"] }
+      ]
+    },
+    {
+      "id": "mood",
+      "label": "Emotion / mood",
+      "layer": "emotion",
+      "opts": [
+        { "id": "none", "v": "", "l": "None", "d": "No emotion line." },
+        { "id": "shy_embarrassed", "v": "shy and embarrassed, breaking eye contact every few seconds, a nervous half-smile she keeps trying to swallow, cheeks and chest flushed pink, glancing down at herself and then away like she has been caught", "l": "Shy / embarrassed", "d": "Bashful, flustered, self-conscious." },
+        { "id": "teasing_confident", "v": "teasing and confident, a slow smirk, eyes locked on the lens, deliberately unhurried, dragging every movement out because she knows exactly what she looks like", "l": "Teasing / confident", "d": "Smug, in charge, playing to camera." },
+        { "id": "desperate_needy", "v": "desperate and needy, brows pinched, mouth open, panting, chasing the feeling and pushing her hips forward to meet her own hand, greedy and impatient", "l": "Desperate / needy", "d": "Starving for it, greedy." },
+        { "id": "playful_giggly", "v": "playful and giggly, loose and silly, laughing between breaths, biting her lip, bouncing on her heels, treating it as fun rather than a performance", "l": "Playful / giggly", "d": "Light, laughing, silly." },
+        { "id": "wrecked", "v": "wrecked and overwhelmed, glassy unfocused eyes, hair stuck to her forehead, jaw hanging slack, unable to hold any rhythm, every touch landing as too much", "l": "Wrecked", "d": "Fucked-out, gone, overstimulated." },
+        { "id": "dominant", "v": "dominant and in control, steady gaze, chin up, an unhurried grip, dictating the pace and watching her partner react to it", "l": "Dominant", "d": "Commanding, deliberate." },
+        { "id": "submissive", "v": "submissive and obedient, soft waiting eyes, chin tilted up, body offered forward, following every cue and reacting to each one", "l": "Submissive", "d": "Waiting, obedient, responsive." },
+        { "id": "cocky_show_off", "v": "cocky and showing off, grinning straight at the lens, hips swinging wide, enjoying being looked at", "l": "Cocky show-off", "d": "Performing, proud of herself." },
+        { "id": "sleepy_lazy", "v": "sleepy and lazy, half-lidded eyes, slow heavy blinks, warm and loose, moving like she woke up exactly like this", "l": "Sleepy / lazy", "d": "Half-awake, unhurried." },
