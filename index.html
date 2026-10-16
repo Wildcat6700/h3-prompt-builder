@@ -71,6 +71,19 @@ const isObject=x=>x&&typeof x==='object'&&!Array.isArray(x);
 const safeText=(x,fallback,max=100)=>typeof x==='string'&&x.trim()?x.replace(/[\r\n\t]+/g,' ').trim().slice(0,max):fallback;
 const hash=x=>{let h=2166136261;for(const c of String(x))h=Math.imul(h^c.charCodeAt(0),16777619);return(h>>>0).toString(36)};
 const ignored=new Set(['version','name','title','description','metadata','notes','sources','research_sources','usage_notes','format','state','referenceOrder','generationSubmitted']);
+function parseLibraryText(text){
+ const clean=text.replace(/^\uFEFF/,'');try{return{value:JSON.parse(clean),recoveredEOF:false}}catch{}
+ const stack=[];let inside=false,escaped=false;
+ for(const c of clean){
+  if(inside){if(escaped)escaped=false;else if(c==='\\')escaped=true;else if(c==='"')inside=false;continue}
+  if(c==='"')inside=true;else if(c==='['||c==='{')stack.push(c);
+  else if(c===']'||c==='}'){const open=stack.pop();if((c===']'&&open!=='[')||(c==='}'&&open!=='{'))throw Error('File is not valid JSON.');}
+ }
+ if(inside||!stack.length)throw Error('File is not valid JSON.');
+ let completed=clean.trimEnd();if(completed.endsWith(','))completed=completed.slice(0,-1).trimEnd();
+ completed+=stack.reverse().map(c=>c==='['?']':'}').join('');
+ try{return{value:JSON.parse(completed),recoveredEOF:true}}catch{throw Error('File is not valid JSON.');}
+}
 function adaptPack(raw,namespace='uploaded'){
  if(isObject(raw)&&raw.version===1&&Array.isArray(raw.groups))return raw;
  if(isObject(raw?.library)&&raw.library.version===1&&Array.isArray(raw.library.groups))return raw.library;
@@ -79,7 +92,13 @@ function adaptPack(raw,namespace='uploaded'){
   if(Array.isArray(raw[key])||isObject(raw[key])){container=raw[key];break}
  }
  let entries;
- const optionList=value=>Array.isArray(value)?value:isObject(value)?(['options','prompts','items','values'].map(k=>value[k]).find(Array.isArray)||null):null;
+ const optionList=value=>{
+  if(Array.isArray(value))return value;if(!isObject(value))return null;
+  const named=['options','prompts','items','values','choices','entries'].map(k=>value[k]).find(Array.isArray);
+  if(named)return named;
+  const arrays=Object.entries(value).filter(([k,v])=>!ignored.has(k)&&Array.isArray(v));
+  return arrays.length===1?arrays[0][1]:null;
+ };
  if(Array.isArray(container)){
   const looksGrouped=container.length&&container.every(v=>isObject(v)&&optionList(v));
   entries=looksGrouped?container.map((v,i)=>[safeText(v.label||v.name||v.title||v.category||v.id,'Category '+(i+1)),v]):[['Options',container]];
@@ -97,8 +116,12 @@ function adaptPack(raw,namespace='uploaded'){
    let text,label;
    if(typeof item==='string'){text=item;label=item}
    else if(isObject(item)){
-    text=[item.text,item.prompt,item.description,item.value,item.content].find(v=>typeof v==='string'&&v.trim());
-    label=item.label||item.name||item.title||item.id||text;
+    const strings=Object.entries(item).filter(([k,v])=>typeof v==='string'&&v.trim()&&!/^(id|.*_id|type|target|language|locale|url|source)$/i.test(k));
+    const namedText=strings.find(([k])=>/(prompt|instruction|fragment|description|template|content|text)/i.test(k)&&!/(label|name|title|display)/i.test(k));
+    text=[item.text,item.prompt,item.description,item.value,item.content,namedText?.[1]].find(v=>typeof v==='string'&&v.trim());
+    if(!text&&strings.length)text=strings.slice().sort((a,b)=>b[1].length-a[1].length)[0][1];
+    const namedLabel=strings.find(([k])=>/(label|name|title|display)/i.test(k));
+    label=item.label||item.name||item.title||namedLabel?.[1]||text||item.id;
    }
    if(typeof text!=='string'||!text.trim())throw Error('An option needs prompt text.');
    const cleanLabel=safeText(label,'Option '+(i+1));let oid='item-'+hash(cleanLabel);
@@ -131,13 +154,13 @@ async function loadPacks(sourceId,fetcher=globalThis.fetch){
   if(!response.ok)throw Error('JSON download unavailable.');
   const text=await response.text();
   if(new TextEncoder().encode(text).length>1048576)throw Error('JSON file exceeds import limit.');
-  let raw;try{raw=JSON.parse(text.replace(/^\uFEFF/,''))}catch{throw Error('File is not valid JSON.')}
+  const parsed=parseLibraryText(text);
   const namespace=file==='XPROMPT.json'?'xprompt':file==='example-options.json'?'example':'instagram';
-  packs.push(adaptPack(raw,namespace));
+  const pack=adaptPack(parsed.value,namespace);if(parsed.recoveredEOF)pack._recoveredEOF=true;packs.push(pack);
  }
  return packs;
 }
-globalThis.H3Libraries={SOURCES,adaptPack,assemble,compatibleSelections,loadPacks};
+globalThis.H3Libraries={SOURCES,parseLibraryText,adaptPack,assemble,compatibleSelections,loadPacks};
 })();
 </script>
 <script id="app-code">
@@ -213,31 +236,31 @@ function buildPrompt(state,library){
 function makeHandoff(state,library){const s=normalizeState(state,library);return{format:'h3-prompt-builder-handoff',version:1,mode:'Ref2VA',library:clone(library),state:s,referenceOrder:[{role:'primary subject',label:'<Picture 1>',originalUrl:s.imageAUrl},...(s.secondSubject?[{role:'second subject',label:'<Picture 2>',originalUrl:s.imageBUrl}]:[]),...(s.separateEnvironment?[{role:'environment',label:'<Picture '+(s.secondSubject?3:2)+'>',originalUrl:s.environmentUrl}]:[]),...(s.useMotion?[{role:'broad motion',label:'<Video 1>',originalUrl:s.motionUrl}]:[])],prompt:buildPrompt(s,library),generationSubmitted:false}}
 const API={FIELDS,validatePack,mergePack,freshState,normalizeState,selectOption,buildPrompt,makeHandoff};globalThis.H3Builder=API;
 if(typeof document==='undefined')return;
-const $=id=>document.getElementById(id),KEY='wildcat-h3-builder-v1',Libraries=globalThis.H3Libraries;let library,state,builtin,storageOK=true,activeSource='saved',profiles=Object.create(null),sourceBusy=false;
+const $=id=>document.getElementById(id),KEY='wildcat-h3-builder-v1',Libraries=globalThis.H3Libraries;let library,state,builtin,storageOK=true,activeSource='saved',profiles=Object.create(null),sourceBusy=false,currentRecovery=false;
 try{builtin=validatePack(JSON.parse($('option-data').textContent));library=clone(builtin);state=freshState(library)}catch(e){$('actionStatus').textContent='Built-in option data could not be parsed. '+e.message;return}
-try{const saved=JSON.parse(localStorage.getItem(KEY)||'null');if(saved){library=validatePack(saved.library);state=normalizeState(saved.state,library);if(saved.profiles&&typeof saved.profiles==='object')for(const source of Libraries.SOURCES){const p=saved.profiles[source.id];if(p)try{const l=validatePack(p.library);profiles[source.id]={library:l,selections:normalizeState({selections:p.selections},l).selections}}catch{}}if(Libraries.SOURCES.some(s=>s.id===saved.activeSource)&&profiles[saved.activeSource])activeSource=saved.activeSource;}}catch(e){storageOK=false;$('actionStatus').textContent='Saved data could not be loaded; defaults are active. You can still copy and download.'}
-if(!profiles.saved)profiles.saved={library:clone(library),selections:clone(state.selections)};
+try{const saved=JSON.parse(localStorage.getItem(KEY)||'null');if(saved){library=validatePack(saved.library);state=normalizeState(saved.state,library);currentRecovery=saved.recoveredEOF===true;if(saved.profiles&&typeof saved.profiles==='object')for(const source of Libraries.SOURCES){const p=saved.profiles[source.id];if(p)try{const l=validatePack(p.library);profiles[source.id]={library:l,selections:normalizeState({selections:p.selections},l).selections,recoveredEOF:p.recoveredEOF===true}}catch{}}if(Libraries.SOURCES.some(s=>s.id===saved.activeSource)&&profiles[saved.activeSource])activeSource=saved.activeSource;}}catch(e){storageOK=false;$('actionStatus').textContent='Saved data could not be loaded; defaults are active. You can still copy and download.'}
+if(!profiles.saved)profiles.saved={library:clone(library),selections:clone(state.selections),recoveredEOF:currentRecovery};
 const inputKeys=['subjectA','subjectB','secondSubject','separateEnvironment','environmentName','useMotion','imageAUrl','imageBUrl','environmentUrl','motionUrl','duration','scene','microMotion','beats','noOverlays'];
-function persist(){profiles[activeSource]={library:clone(library),selections:clone(state.selections)};try{localStorage.setItem(KEY,JSON.stringify({library,state,activeSource,profiles}));storageOK=true}catch(e){storageOK=false}$('saveBadge').textContent=storageOK?'Saved on this device':'Session only'}
+function persist(){profiles[activeSource]={library:clone(library),selections:clone(state.selections),recoveredEOF:currentRecovery};try{localStorage.setItem(KEY,JSON.stringify({library,state,activeSource,profiles,recoveredEOF:currentRecovery}));storageOK=true}catch(e){storageOK=false}$('saveBadge').textContent=storageOK?'Saved on this device':'Session only'}
 function message(id,text,error=false){$(id).textContent=text;$(id).classList.toggle('error',error)}
 function renderInputs(){for(const key of inputKeys){const el=$(key);if(el.type==='checkbox')el.checked=state[key];else el.value=state[key]}$('secondFields').hidden=!state.secondSubject;$('environmentFields').hidden=!state.separateEnvironment;$('motionFields').hidden=!state.useMotion;$('environmentLabel').textContent='Picture '+(state.secondSubject?3:2)+' · environment';$('referenceCount').textContent=(1+(state.secondSubject?1:0)+(state.separateEnvironment?1:0))+' IMAGE'+(state.secondSubject||state.separateEnvironment?'S':'')+(state.useMotion?' + VIDEO':'')}
 function renderGroups(){const focused=document.activeElement?.dataset?.focusKey;const open=new Set([...document.querySelectorAll('#groups details[open]')].map(d=>d.dataset.id));const first=!$('groups').children.length;$('groups').replaceChildren();for(const g of library.groups){const d=document.createElement('details');d.className='optiongroup';d.dataset.id=g.id;d.open=first?['action','camera','framing'].includes(g.id):open.has(g.id);const summary=document.createElement('summary'),title=document.createElement('span'),meta=document.createElement('span');title.textContent=g.label;meta.className='group-meta';meta.textContent=(state.selections[g.id]||[]).map(id=>g.options.find(o=>o.id===id)?.label).filter(Boolean).join(', ')||'None';summary.append(title,meta);d.append(summary);const chips=document.createElement('div');chips.className='chips';const add=(id,label,selected,needs)=>{const b=document.createElement('button');b.type='button';b.dataset.focusKey=g.id+':'+(id===null?'clear':'option:'+id);b.className='chip'+(needs?' needs':'');b.textContent=label;b.setAttribute('aria-pressed',String(selected));if(needs)b.title='Adds a second subject reference automatically';b.addEventListener('click',()=>{const hadSecond=state.secondSubject;state=selectOption(state,library,g.id,id);renderAll();persist();if(!hadSecond&&state.secondSubject)message('actionStatus','Second subject enabled. Add its original reference before generation.');});chips.append(b)};add(null,'None',!(state.selections[g.id]||[]).length,false);for(const o of g.options)add(o.id,o.label,state.selections[g.id]?.includes(o.id),o.requiresSubjects===2&&!state.secondSubject);d.append(chips);$('groups').append(d)}if(focused){const replacement=[...$('groups').querySelectorAll('button')].find(b=>b.dataset.focusKey===focused);replacement?.focus({preventScroll:true})}}
 function renderOutput(){const prompt=buildPrompt(state,library);$('promptOutput').value=prompt.text;$('promptCount').textContent=prompt.text.length.toLocaleString()+' characters · 6 fields';$('handoffOutput').value=JSON.stringify(makeHandoff(state,library),null,2);$('libraryInfo').textContent=library.groups.length+' groups · '+library.groups.reduce((n,g)=>n+g.options.length,0)+' options. Importing matching IDs updates those options; other IDs are appended.'}
-function renderSource(){$('librarySource').value=activeSource;$('librarySource').disabled=sourceBusy;$('reloadSource').disabled=sourceBusy||!Libraries.SOURCES.find(s=>s.id===activeSource)?.files.length}
+function renderSource(){$('librarySource').value=activeSource;$('librarySource').disabled=sourceBusy;$('reloadSource').disabled=sourceBusy||!Libraries.SOURCES.find(s=>s.id===activeSource)?.files.length;if(currentRecovery&&!sourceBusy&&!$('libraryStatus').textContent)message('libraryStatus','The file ended early; complete entries were recovered. Missing content cannot be restored. The original file was not changed.',true)}
 function renderAll(){renderInputs();renderGroups();renderOutput();renderSource()}
 async function switchLibrary(sourceId,refresh=false){
  if(sourceBusy)return;const source=Libraries.SOURCES.find(s=>s.id===sourceId);if(!source)return;
  persist();sourceBusy=true;renderSource();message('libraryStatus','Loading '+source.label+'...');
  try{
-  let next;
+  let next,recovered=false;
   if(sourceId==='original')next=clone(builtin);
-  else if(profiles[sourceId]&&!refresh)next=clone(profiles[sourceId].library);
+  else if(profiles[sourceId]&&!refresh){next=clone(profiles[sourceId].library);recovered=profiles[sourceId].recoveredEOF===true;}
   else if(sourceId==='saved')next=clone(builtin);
-  else next=Libraries.assemble(API,builtin,await Libraries.loadPacks(sourceId),refresh?profiles[sourceId]?.library:null);
+  else{const packs=await Libraries.loadPacks(sourceId);next=Libraries.assemble(API,builtin,packs,refresh?profiles[sourceId]?.library:null);recovered=packs.some(p=>p._recoveredEOF)||!!(refresh&&profiles[sourceId]?.recoveredEOF);}
   const choices=profiles[sourceId]?.selections||Libraries.compatibleSelections(state.selections,next);
   const nextState=normalizeState({...state,selections:choices},next);
-  activeSource=sourceId;library=next;state=nextState;renderAll();persist();
-  message('libraryStatus',source.label+' loaded. '+library.groups.reduce((n,g)=>n+g.options.length,0)+' options; original options included.');
+  activeSource=sourceId;library=next;state=nextState;currentRecovery=recovered;renderAll();persist();
+  message('libraryStatus',source.label+' loaded. '+library.groups.reduce((n,g)=>n+g.options.length,0)+' options; original options included.'+(recovered?' The file ended early; complete entries only. Missing content cannot be restored. The original file was not changed.':''),recovered);
  }catch{message('libraryStatus','Could not load this JSON library. Check the connection and file format. Your current library and choices were kept.',true)}
  finally{sourceBusy=false;renderSource()}
 }
@@ -252,7 +275,7 @@ $('copyPrompt').onclick=()=>copy(buildPrompt(state,library).text,'promptOutput',
 $('copyHandoff').onclick=()=>copy(JSON.stringify(makeHandoff(state,library),null,2),'handoffOutput','handoffStatus');$('downloadHandoff').onclick=()=>download('H3-handoff.json',JSON.stringify(makeHandoff(state,library),null,2),'application/json');
 const example={version:1,name:'Example camera additions',groups:[{id:'camera',label:'Camera movement',target:'detailed_description',multi:false,options:[{id:'slow-crane-rise',label:'Slow crane rise',text:'The camera rises gradually on a smooth crane path, revealing more of the reference environment while keeping the subject in frame.'}]},{id:'weather',label:'Weather accents',target:'detailed_description',multi:true,order:65,options:[{id:'gentle-breeze',label:'Gentle breeze',text:'A gentle breeze moves loose fabric and nearby foliage subtly, without changing the subject or scene.'}]}]};
 $('downloadTemplate').onclick=()=>download('H3-example-options.json',JSON.stringify(example,null,2),'application/json');$('exportLibrary').onclick=()=>download('H3-option-library.json',JSON.stringify(library,null,2),'application/json');$('importOptions').onclick=()=>$('jsonFile').click();
-$('jsonFile').onchange=async event=>{const file=event.target.files?.[0];if(!file)return;try{if(sourceBusy)throw Error('Wait for the selected library to finish loading.');if(file.size>1048576)throw Error('Use a JSON file smaller than 1 MiB.');const imported=Libraries.adaptPack(JSON.parse((await file.text()).replace(/^\uFEFF/,'')),'uploaded');let merged=clone(profiles.saved?.library||builtin);merged=mergePack(merged,library);merged=mergePack(merged,imported);const choices={...(profiles.saved?.selections||{}),...state.selections};const nextState=normalizeState({...state,selections:choices},merged);persist();activeSource='saved';library=merged;state=nextState;renderAll();persist();message('importStatus','Options added to My saved library. Existing libraries and selections were kept.')}catch(e){message('importStatus','Import rejected. Use a supported JSON library under 1 MiB. Your existing libraries and choices were kept.',true)}finally{event.target.value=''}};
+$('jsonFile').onchange=async event=>{const file=event.target.files?.[0];if(!file)return;try{if(sourceBusy)throw Error('Wait for the selected library to finish loading.');if(file.size>1048576)throw Error('Use a JSON file smaller than 1 MiB.');const parsed=Libraries.parseLibraryText(await file.text());const imported=Libraries.adaptPack(parsed.value,'uploaded');let merged=clone(profiles.saved?.library||builtin);merged=mergePack(merged,library);merged=mergePack(merged,imported);const choices={...(profiles.saved?.selections||{}),...state.selections};const nextState=normalizeState({...state,selections:choices},merged);const recovered=parsed.recoveredEOF||currentRecovery||!!profiles.saved?.recoveredEOF;persist();activeSource='saved';library=merged;state=nextState;currentRecovery=recovered;renderAll();persist();message('importStatus','Options added to My saved library. Existing libraries and selections were kept.'+(recovered?' The file ended early; complete entries only. Missing content cannot be restored. The original file was not changed.':''),recovered)}catch(e){message('importStatus','Import rejected. Use a supported JSON library under 1 MiB. Your existing libraries and choices were kept.',true)}finally{event.target.value=''}};
 $('resetChoices').onclick=()=>{const fresh=freshState(library);for(const key of inputKeys)fresh[key]=state[key];fresh.selections=freshState(library).selections;fresh.microMotion=true;fresh.beats=true;fresh.noOverlays=false;state=normalizeState(fresh,library);renderAll();persist();message('actionStatus','Choices reset; reference notes kept.')};
 $('restoreLibrary').onclick=()=>switchLibrary('original');
 renderAll();persist();
