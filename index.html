@@ -66,9 +66,10 @@ html{scroll-padding-top:76px;scroll-padding-bottom:140px}.shell{padding-bottom:1
  const SOURCES=[
  {id:'original',label:'Original',files:[]},
  {id:'instagram',label:'Instagram',files:['instagram-prompt-creator.json']},
- {id:'nsfw',label:'NSFW Pack',files:['nsfw-director-pack.json']},   // <-- add
+ {id:'nsfw',label:'NSFW Pack',files:['NSFW.json']},
  {id:'xprompt',label:'XPROMPT',files:['XPROMPT.json']},
-];
+ {id:'example',label:'Example',files:['example-options.json']},
+ {id:'saved',label:'My uploads',files:[]}
 ];
 const allowed=new Set(SOURCES.flatMap(s=>s.files));
 const isObject=x=>x&&typeof x==='object'&&!Array.isArray(x);
@@ -165,7 +166,7 @@ async function loadPacks(sourceId,fetcher=globalThis.fetch){
   const text=await response.text();
   if(new TextEncoder().encode(text).length>1048576)throw Error('JSON file exceeds import limit.');
   const parsed=parseLibraryText(text);
-  const namespace=file==='XPROMPT.json'?'xprompt':file==='example-options.json'?'example':'instagram';
+  const namespace=source.id;
   const pack=adaptPack(parsed.value,namespace);if(parsed.recoveredEOF)pack._recoveredEOF=true;packs.push(pack);
  }
  return packs;
@@ -403,7 +404,7 @@ function renderOutput(){const prompt=buildPrompt(state,library);$('promptOutput'
 
 function renderSource(){
  const count=workflowEnabled.length;$('dockCurrent').textContent=count?count+' workflow'+(count===1?'':'s')+' active':'No workflows active';$('workflowCount').textContent=count+' active';$('randomizePrompt').disabled=sourceBusy||!library.groups.length;$('refreshWorkflows').disabled=sourceBusy||!workflowEnabled.some(id=>WORKFLOWS.find(w=>w.id===id)?.files.length);$('randomizePromptDock').disabled=sourceBusy||!library.groups.length;
- const list=$('workflowToggles');list.replaceChildren();for(const source of WORKFLOWS){const label=document.createElement('label');label.className='workflow-switch';const input=document.createElement('input');input.type='checkbox';input.dataset.workflow=source.id;input.checked=workflowEnabled.includes(source.id);input.disabled=sourceBusy;input.setAttribute('aria-label',source.label);const body=document.createElement('span'),name=document.createElement('span'),note=document.createElement('span');name.className='workflow-name';name.textContent=source.label;note.className='workflow-note';note.textContent=source.id==='saved'?'Your uploaded options':source.id==='original'?'Built-in options':source.id==='instagram'?'Instagram options':source.id==='xprompt'?'Your JSON library':'Example options';body.append(name,note);label.append(input,body);input.addEventListener('change',async()=>{const next=new Set(workflowEnabled);if(input.checked)next.add(source.id);else next.delete(source.id);await setWorkflows([...next]);});list.append(label);}
+ const list=$('workflowToggles');list.replaceChildren();for(const source of WORKFLOWS){const label=document.createElement('label');label.className='workflow-switch';const input=document.createElement('input');input.type='checkbox';input.dataset.workflow=source.id;input.checked=workflowEnabled.includes(source.id);input.disabled=sourceBusy;input.setAttribute('aria-label',source.label);const body=document.createElement('span'),name=document.createElement('span'),note=document.createElement('span');name.className='workflow-name';name.textContent=source.label;note.className='workflow-note';note.textContent=source.id==='saved'?'Your uploaded options':source.id==='original'?'Built-in options':source.id==='instagram'?'Instagram options':source.id==='xprompt'?'Your JSON library':source.id==='example'?'Example options':'Additional options';body.append(name,note);label.append(input,body);input.addEventListener('change',async()=>{const next=new Set(workflowEnabled);if(input.checked)next.add(source.id);else next.delete(source.id);await setWorkflows([...next]);});list.append(label);}
 }
 function renderAll(){renderInputs();renderGroups();renderOutput();renderSource()}
 async function setWorkflows(requested,options={}){
