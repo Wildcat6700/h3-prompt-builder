@@ -1,0 +1,323 @@
+{
+  "version": 1,
+  "name": "NSFW Director's Pack - porn, hot scenarios & filming",
+  "groups": [
+    {
+      "id": "nsfw-act",
+      "label": "Sex act / scenario",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 5,
+      "options": [
+        { "id": "act-handjob", "label": "Handjob", "text": "{A} gives {B} a slow, firm handjob. {A}'s hand is sealed around the base of {B}'s shaft, sliding the full length from base to glans with a slight twist at the top, then back down. The fist never leaves the shaft and the glans emerges fully on every upstroke. {B}'s hips lift faintly into the rhythm and the scrotum shifts with each stroke. Keep the grip attached and anatomically correct, with no hand sliding off, no clipping through the shaft, and no change in the size of the shaft." },
+        { "id": "act-twohand-handjob", "label": "Two-handed handjob", "text": "{A} strokes {B} with both hands, one fist above the other on the shaft, pulling long and slow so the hands slide together and apart along the length. The shaft stays visible between the fists and the glans clears the top hand on every stroke. {A}'s shoulders and breasts rock with the motion. Keep both hands attached, evenly spaced, and never overlapping or merging." },
+        { "id": "act-blowjob", "label": "Blowjob", "text": "{A} takes {B}'s glans into her mouth, lips stretched around it, slides down the shaft, then bobs in a steady rhythm while one hand works the base. Her cheeks hollow on the upstrokes, her jaw stays relaxed, and spit leaves the shaft glossy. She takes it deeper as the shot runs. Her lips must stay in contact with the shaft and never slide through it." },
+        { "id": "act-deepthroat", "label": "Deep throat", "text": "{A} takes {B} deep into her throat, lips seated at the base, holds for a beat, then draws back to the glans. She repeats the deep plunge in a slow rhythm while saliva runs down the shaft and over her fingers. Her throat works around it and her eyes water slightly. Keep the shaft and throat on one axis with no bending through the middle." },
+        { "id": "act-titjob", "label": "Titjob", "text": "{A} presses her oiled breasts together around {B}'s shaft and strokes with the channel, the glans pushing up out of her cleavage on every upstroke. Her hands hold the outside of her breasts and squeeze as she moves. The shaft stays gripped between the breasts with believable soft pressure and never passes through them." },
+        { "id": "act-fingering", "label": "Fingering", "text": "{A} works two fingers inside {B}, palm up, curling them on every inward stroke while the thumb circles above. {B}'s hips roll into the hand and her thighs tense. The fingers stay inside on the stroke and withdraw only partway. Keep wrist, fingers and the opening anatomically coherent with a constant finger count." },
+        { "id": "act-vaginal", "label": "Vaginal sex", "text": "{A} and {B} fuck in a steady rhythm. {B}'s shaft slides the full length in and out of {A}'s pussy, the lips stretching around the shaft on the way in and dragging and clinging on the way out. A clear seam separates the shaft from the skin and the two must not merge. The visible shaft length changes with every stroke." },
+        { "id": "act-anal", "label": "Anal sex", "text": "{A} and {B} fuck anally in a steady rhythm. {B}'s shaft slides the full length in and out of {A}'s asshole, which stretches taut and pale around it, gripping and dragging on the way in and blooming back out as it pulls free. A clear seam separates the shaft from the skin. Do not merge them and do not leave a gap." },
+        { "id": "act-prone-bone", "label": "Prone bone", "text": "{B} lies over {A}'s back and fucks her from behind while {A} lies face down, chest flat, hips raised and legs spread wide. {B}'s hands brace on {A}'s hips and her chest presses to {A}'s spine so the two bodies read as one stacked mass. Every thrust ripples through {A}'s hips, ass and thighs." },
+        { "id": "act-doggystyle", "label": "Doggystyle", "text": "{A} is on all fours with her back arched and legs apart; {B} kneels behind with hands on {A}'s hips and drives in and out in a steady rhythm. {A}'s breasts hang and swing with each thrust and her hair falls forward. Keep both sets of legs planted and the two bodies clearly separate." },
+        { "id": "act-cowgirl", "label": "Cowgirl", "text": "{A} straddles {B} and rides, rolling her hips down and forward in a slow grind, then lifting and dropping in a rhythm. Her hands brace on {B}'s chest and her breasts bounce heavily with every roll. Keep the shaft inside her throughout, following the angle of her hips." },
+        { "id": "act-reverse-cowgirl", "label": "Reverse cowgirl", "text": "{A} rides {B} facing away, back to the camera, knees planted either side, lifting and dropping in a steady rhythm. Her ass and thighs work with the motion and her shoulders roll. Keep the shaft inside her and the penetration readable between her thighs." },
+        { "id": "act-missionary", "label": "Missionary", "text": "{B} lies over {A}, who is on her back with legs hooked high and spread, and thrusts in a steady rhythm. {A}'s breasts roll with each stroke and her hands grip {B}'s shoulders or the sheets. Keep the bodies in contact at the hips and the shaft inside her." },
+        { "id": "act-spooning", "label": "Spooning", "text": "{A} and {B} lie on their sides, {B} tucked behind {A}, hips pressed to her ass, fucking in short slow strokes. {A}'s top leg is lifted and held. The bodies stay joined along their whole length and the shaft slides shallow and deep inside her." },
+        { "id": "act-standing-behind", "label": "Standing from behind", "text": "{B} takes {A} from behind standing; {A} is bent forward with hands braced on a surface and feet apart while {B} holds her hips and thrusts. Both stay on their feet and keep believable balance as the rhythm builds." },
+        { "id": "act-against-wall", "label": "Against the wall", "text": "{B} lifts and presses {A} to a wall, one of her legs hooked around {B}'s hip, and fucks her with short deep strokes. Her back stays flat to the wall, her feet barely touch the ground, and the bodies stay in contact at the hips with believable supported weight." },
+        { "id": "act-sixtynine", "label": "Sixty-nine", "text": "{A} and {B} are stacked head to tail, {A} above with her mouth on {B}'s shaft while {B}'s face is buried between {A}'s thighs. Both work in their own rhythm and both bodies stay in frame. Keep the two orientations distinct and never merge the limbs." },
+        { "id": "act-facesitting", "label": "Face sitting", "text": "{A} sits over {B}'s face, thighs either side of {B}'s head, hips rocking slowly while {B}'s mouth works. {A}'s hands brace on {B}'s chest or the surface. Keep {A}'s weight believable and her thighs clear of {B}'s head." },
+        { "id": "act-mutual", "label": "Mutual masturbation", "text": "{A} and {B} lie or sit side by side and stroke each other at the same time, each hand wrapped around the other's shaft. Both rhythms stay readable and the two hands never cross or merge." },
+        { "id": "act-solo", "label": "Solo masturbation", "text": "{A} is alone, stroking her own shaft with a slow firm rhythm while her other hand rests on her thigh. Her hips lift faintly into each stroke and her breathing deepens. Keep the arm, hand and shaft anatomically attached throughout." },
+        { "id": "act-edging", "label": "Edging", "text": "{A} strokes {B} to the edge, then slows right down and squeezes at the base to hold it back before speeding up again. The shaft stiffens and the glans darkens between holds. Repeat the slow-fast pattern at least twice and keep the grip sealed." },
+        { "id": "act-grinding", "label": "Grinding", "text": "{A} straddles {B} and grinds without lifting off, rolling her hips down and forward in a slow circular rhythm while {B}'s shaft stays inside her. Her thighs grip and her breasts sway with each roll. She never quite settles." },
+        { "id": "act-strip", "label": "Slow strip", "text": "{A} peels off one garment at a time in slow deliberate movements, letting each piece fall away, while staying in the same spot and facing the same direction. The body underneath keeps its shape and the fabric never clips through skin." },
+        { "id": "act-teasing", "label": "Teasing", "text": "{A} teases {B} with light strokes, fingertips and thumb only, running up the shaft and circling the glans while {B} twitches and breathes harder. Only speed up into full strokes near the end." }
+      ]
+    },
+    {
+      "id": "nsfw-staging",
+      "label": "Body staging",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 6,
+      "options": [
+        { "id": "stg-on-back", "label": "On her back, legs spread", "text": "{A} lies on her back, knees up and legs spread wide, weight settled into the surface. Her hips are open and her hands rest beside her or on her own thighs. Both feet stay planted and the legs stay clearly separated." },
+        { "id": "stg-prone", "label": "Face down, hips raised", "text": "{A} lies face down, chest and cheek flat, hips raised, legs spread. Her body runs along the surface with a slight arch through the lower back and her head tucked low." },
+        { "id": "stg-all-fours", "label": "On all fours", "text": "{A} is on hands and knees, back arched, hips high, knees apart. Her shoulders sit over her hands and her head drops between them." },
+        { "id": "stg-straddling", "label": "Straddling on top", "text": "{A} straddles {B}, knees planted either side of their hips, weight on her thighs, leaning forward with hands braced. She stays upright over {B}'s hips throughout." },
+        { "id": "stg-lap", "label": "Seated on lap", "text": "{A} sits on {B}'s lap facing them, knees either side, feet supported, hands on {B}'s shoulders or chest. Her weight settles into the lap and the two stay joined at the hips." },
+        { "id": "stg-bent-over", "label": "Standing, bent over", "text": "{A} stands bent at the waist, feet apart and flat, hands braced on a surface, hips pushed back. Her back is roughly level and her head is down." },
+        { "id": "stg-on-side", "label": "Lying on her side", "text": "{A} lies on her side, top leg lifted and bent, bottom leg straight. Her upper body rests on one elbow and her hips are open." },
+        { "id": "stg-kneeling", "label": "Kneeling between legs", "text": "{A} kneels upright between {B}'s legs with her knees apart and her weight on her heels, leaning forward into the action." },
+        { "id": "stg-bed-edge", "label": "Hips at the edge", "text": "{A} lies along the edge of the surface with her hips at the edge and one or both legs hanging or lifted, feet clear of the floor." },
+        { "id": "stg-lean-wall", "label": "Leaning back on a wall", "text": "{A} leans her upper back or shoulder against a wall or surface with feet planted forward and hips angled out." }
+      ]
+    },
+    {
+      "id": "nsfw-anatomy",
+      "label": "Anatomy & bodies",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 7,
+      "options": [
+        { "id": "anat-futanari-solo", "label": "Futanari (solo)", "text": "{A} is a futanari: a feminine body with full breasts, narrow waist and wide hips, plus a penis and scrotum. Keep the breasts, the shaft and the scrotum all present and anatomically consistent at every angle." },
+        { "id": "anat-futanari-female", "label": "Futanari and female", "text": "{A} is a futanari with breasts, a penis and a scrotum; {B} is female. Keep {A}'s shaft and scrotum and both sets of breasts stable in size and position for the whole take." },
+        { "id": "anat-two-futanari", "label": "Two futanari", "text": "Both {A} and {B} are futanari, each with breasts, a penis and a scrotum. Both shafts stay present and distinct at their own consistent size, and never merge with each other or swap places." },
+        { "id": "anat-soft-hang", "label": "Soft cock hanging down", "text": "A cock that is not in use hangs soft and loose, swinging as a pendulum with the body's motion, and never stiffens. Keep it floppy and heavy rather than rigid." },
+        { "id": "anat-erect-flexible", "label": "Erect but flexible", "text": "The shaft is fully erect but not rigid: it stands with a slight natural bend and flexes and bows with each stroke or spurt instead of staying perfectly straight." },
+        { "id": "anat-heavy-breasts", "label": "Heavy breasts", "text": "Both subjects' breasts are full and heavy, hanging and swinging under their own weight with every movement and settling with a soft bounce. They never stay still or behave rigidly." }
+      ]
+    },
+    {
+      "id": "nsfw-fluid",
+      "label": "Cum & fluids",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 8,
+      "options": [
+        { "id": "fluid-precum", "label": "Precum bead", "text": "A bead of clear precum wells at the glans and smears under the thumb or lips as the action continues, leaving the tip glossy. The bead keeps returning rather than drying up." },
+        { "id": "fluid-ropes", "label": "Thick ropes and spurts", "text": "The cum is thick, ropey and opaque off-white, and pulses out in four to six diminishing spurts, each weaker than the last. Each rope holds its shape for a beat where it lands, then sags under its own weight and slides in slow heavy rivulets. Thin strands stretch and snap between the glans and the skin. Keep the same colour, thickness and viscosity the whole time; nothing thins, vanishes or changes colour." },
+        { "id": "fluid-facial", "label": "Facial", "text": "Cum lands across {A}'s face in thick ropes, catching her cheek, jaw, forehead, lips and lashes. It holds on the skin, hangs in droplets and runs down her jaw in slow rivulets. She flinches and squeezes her eyes shut on impact, then opens them and looks at the lens with cum still on her face." },
+        { "id": "fluid-creampie", "label": "Creampie leak", "text": "Cum left inside {A} beads at the opening and leaks out in a slow thick trickle, running down her inner thigh and dripping onto the surface. The trickle keeps running through the rest of the take and never absorbs or disappears." },
+        { "id": "fluid-on-tits", "label": "Cum on her tits", "text": "Cum arcs onto {A}'s chest in thick ropes, landing across her breasts, sternum and collarbone. It stays glossy on the skin, sags and slides down the curve of each breast in slow rivulets and drips from the nipples." },
+        { "id": "fluid-on-belly", "label": "Cum on her belly", "text": "Cum pulses onto {A}'s stomach in a few shortening spurts, splatting across her belly and navel and scattering fine specks. It sags and runs down toward her groin in slow rivulets and stays glossy." },
+        { "id": "fluid-squirt", "label": "Squirting", "text": "A clear fluid sprays from {A} in a short pulsing gush, arcing away and spattering onto the surface. It arrives in two or three diminishing bursts and leaves a glossy wet patch that stays." },
+        { "id": "fluid-swallow", "label": "Swallow", "text": "{A} keeps the cum in her mouth for a beat, shows it on her tongue, then swallows and opens her mouth to show it gone. Saliva and a little cum stay on her lips." },
+        { "id": "fluid-spit", "label": "Spit strings", "text": "Strings of saliva hang and stretch between {A}'s lips and the shaft, thinning and snapping as she pulls back, then reforming on the next stroke. The spit leaves the shaft glossy and the strings never vanish instantly." },
+        { "id": "fluid-oiled", "label": "Oiled bodies", "text": "Both bodies are oiled and glossy, the sheen catching every highlight and moving with the skin. Friction is slick and the hands and shaft slide smoothly with a wet shine." },
+        { "id": "fluid-sweat", "label": "Sweat", "text": "A light sweat builds on both bodies, beading on the chest, shoulders and lower back and running in thin lines. It catches the light and darkens the skin where it gathers." }
+      ]
+    },
+    {
+      "id": "nsfw-consistency",
+      "label": "Continuity locks",
+      "target": "detailed_description",
+      "multi": true,
+      "order": 9,
+      "options": [
+        { "id": "con-identity", "label": "Lock identity", "text": "Lock both identities: face, hair, choker, piercings, body proportions and skin tone stay identical from the first frame to the last, including through occlusion and changes of angle. No facial drift and no change in breast shape or size." },
+        { "id": "con-no-morph", "label": "No morphing", "text": "No morphing: hands, limbs, shafts and holes keep a stable shape, scale and attachment across frames. Nothing stretches impossibly or fuses between frames." },
+        { "id": "con-distinct", "label": "Shaft and hole stay separate", "text": "The shaft and the hole it enters stay two distinct things with a clear seam between them. They must not merge into one shape and must not leave a visible gap." },
+        { "id": "con-stretch", "label": "Hole stretches and grips", "text": "The rim of the hole stretches taut and pale around the shaft on the way in, gripping and dragging, then relaxes and blooms back out as the shaft pulls free. The visible shaft length changes with every stroke." },
+        { "id": "con-flex", "label": "Cock stays flexible", "text": "The cock is flexible, not rigid: it bows and bends as it slides and flexes with each thrust or spurt rather than staying perfectly straight." },
+        { "id": "con-anchored", "label": "Anchored contact", "text": "Keep the grip and the point of contact anchored. Hands stay wrapped where they belong and the shaft stays attached at the hips; nothing slides off and nothing passes through a body." },
+        { "id": "con-contact-order", "label": "Contact before force", "text": "Contact is established before force is applied and released before the parts separate: hands meet skin, the shaft meets the hole, and feet meet the ground, in that order." },
+        { "id": "con-fluid", "label": "Fluid stays put", "text": "Fluid already on the skin stays on the skin. New ropes land on top of the old ones so the coat accumulates instead of resetting, and nothing teleports between frames." },
+        { "id": "con-limbs", "label": "Fixed limb count", "text": "Keep the limb count fixed. No extra hands, arms or legs appear, and the finger count stays consistent at every angle." }
+      ]
+    },
+    {
+      "id": "nsfw-look",
+      "label": "Look & treatment",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 11,
+      "options": [
+        { "id": "look-silhouette", "label": "Pure silhouette", "text": "Render the whole shot as a stark high-contrast silhouette: pure white figures on a pure black ground, no interior detail, softly glowing edges, shapes readable only by outline. Keep the silhouette crisp and stable at every angle." },
+        { "id": "look-backlit", "label": "Backlit with rim", "text": "Backlight both subjects so they read almost as silhouettes with a narrow glowing rim separating them from the background. Faces and bodies stay readable in shadow and no light passes through the bodies." },
+        { "id": "look-oiled", "label": "Oiled and glossy", "text": "Oiled glossy skin with strong specular highlights that move with the body. Friction is slick and every contact slides smoothly." },
+        { "id": "look-neon", "label": "Neon noir", "text": "Neon practical light in two contrasting colours, one from each side, with coloured spill across the skin and a dark background. Keep the two colour directions fixed and the skin readable under them." },
+        { "id": "look-candle", "label": "Candlelit", "text": "Low warm candlelight from one side, soft shadows, gentle falloff and a dark room behind. Highlight detail survives on the skin and the shadow edges stay soft." },
+        { "id": "look-film", "label": "Film grain", "text": "Fine film grain, gentle highlight rolloff and slightly muted colour, with stable exposure and no burned-in texture damage." },
+        { "id": "look-docu", "label": "Documentary handheld", "text": "Observational handheld feel: small natural drift and breathing camera, real skin texture, no polished posing. Nothing snaps or shakes hard." },
+        { "id": "look-editorial", "label": "Glossy editorial", "text": "Clean deliberate editorial look: controlled contrast, sculpted highlights, smooth skin and a considered composition." },
+        { "id": "look-dreamy", "label": "Soft dreamy", "text": "Soft dreamy diffusion with gently bloomed highlights and a slightly hazy background, while faces stay sharp enough to read." }
+      ]
+    },
+    {
+      "id": "camera",
+      "label": "Camera movement",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 40,
+      "options": [
+        { "id": "cam-orbit-360", "label": "Full 360 orbit", "text": "The camera orbits a full 360 degrees around the subjects at a constant radius and height, starting from behind and returning to the start, keeping the same subject size and a level horizon. Background parallax develops continuously with no cuts and no drift in or out." },
+        { "id": "cam-crane", "label": "Slow crane over the bodies", "text": "The camera rises slowly on a crane path over the subjects, revealing more of the scene while keeping them framed, easing in and out with no tilt or zoom." },
+        { "id": "cam-dolly-body", "label": "Dolly along the body", "text": "The camera dollies slowly along the length of the bodies, travelling from head to hips at a constant height and distance, with continuous parallax and no change in focal length." },
+        { "id": "cam-gimbal", "label": "Gimbal walk-around", "text": "The camera walks smoothly around the subjects on a gimbal, holding them the same size in frame and keeping the horizon level, with gentle acceleration and no shake." },
+        { "id": "cam-floor", "label": "Floor-level lateral slide", "text": "The camera slides along the floor at ankle height, moving laterally past the subjects so their bodies cross the frame in the foreground, with continuous parallax and no tilt." },
+        { "id": "cam-push-insert", "label": "Push in to insert", "text": "The camera pushes slowly in from the wide view to a tight insert on the point of contact, keeping focal length fixed and easing to a stop." },
+        { "id": "cam-handheld-close", "label": "Close handheld", "text": "Restrained handheld camera held close to the action, drifting and breathing gently with the subjects' rhythm, never shaking hard or drifting off the subject." },
+        { "id": "cam-locked-wide", "label": "Locked wide two-shot", "text": "The camera is locked off in a wide steady two-shot for the whole take, letting the bodies move through the frame with no camera movement at all." }
+      ]
+    },
+    {
+      "id": "framing",
+      "label": "Framing",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 30,
+      "options": [
+        { "id": "fr-insert", "label": "Insert on the contact", "text": "Keep a tight insert on the point of contact, so the shaft and the hole or hand fill most of the frame, with the surrounding bodies soft and out of the way." },
+        { "id": "fr-face-and-action", "label": "Face and action readable", "text": "Frame so the face and the action are both readable at once, using a high or side angle that lets the eyes and the point of contact share the frame." },
+        { "id": "fr-overhead", "label": "Straight down over the bodies", "text": "Frame straight down over the bodies from directly above, laying them out flat across the frame with heads toward one edge." },
+        { "id": "fr-macro", "label": "Macro skin detail", "text": "Use a macro-style close view of skin, oil, sweat and fluid detail at a plausible working distance, keeping a small plane sharp." },
+        { "id": "fr-pov", "label": "POV framing", "text": "Use a POV frame, with the camera-holder's own body entering the frame as the viewer's body and the other subject facing or straddling the lens." },
+        { "id": "fr-two-shot", "label": "Clean two-shot", "text": "Hold a clean two-shot with both subjects fully readable and clearly separated in frame, with space around the limbs so nothing is cropped at the joints." }
+      ]
+    },
+    {
+      "id": "angle",
+      "label": "Camera height & angle",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 33,
+      "options": [
+        { "id": "ang-taller", "label": "Held high by someone taller", "text": "The camera is held by someone taller, looking down at roughly 45 degrees, so the subject's head is cut off at the top edge and the body fills the frame down to the legs." },
+        { "id": "ang-floor-level", "label": "Floor-level looking up", "text": "The camera sits on or just above the floor and looks slightly up along the bodies, keeping a level horizon and readable proportions." },
+        { "id": "ang-steep-down", "label": "Steep high angle", "text": "The camera is high above, looking down at a steep angle onto the backs or fronts of the bodies, keeping the surface rectilinear and hands separated." }
+      ]
+    },
+    {
+      "id": "viewpoint",
+      "label": "Subject-facing viewpoint",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 34,
+      "options": [
+        { "id": "vp-pov-participant", "label": "POV of a participant", "text": "Shoot from the point of view of one participant, with their own body entering the bottom of the frame and the other subject facing them." },
+        { "id": "vp-mirror", "label": "Mirror view", "text": "Shoot through or into a mirror so both the subject and their reflection are visible, keeping reflected geometry, handedness and identity consistent." },
+        { "id": "vp-three-quarter", "label": "Three-quarter view", "text": "Hold a three-quarter view, showing the near side of the subject and a modest amount of the far side, with coherent depth." }
+      ]
+    },
+    {
+      "id": "focus",
+      "label": "Focus & depth of field",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 35,
+      "options": [
+        { "id": "foc-rack", "label": "Rack face to contact", "text": "Rack focus slowly from the face to the point of contact and hold, transferring sharpness smoothly in one pass with no pumping." },
+        { "id": "foc-shallow-bokeh", "label": "Shallow with soft bokeh", "text": "Keep a shallow depth of field with the point of contact consistently sharp and the background falling into soft bokeh." }
+      ]
+    },
+    {
+      "id": "time",
+      "label": "Time & pace",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 50,
+      "options": [
+        { "id": "tim-slowmo", "label": "Gentle slow motion", "text": "Play the action in gentle slow motion with real physics preserved, so fluid and flesh movement read clearly, without stuttering or frame duplication." },
+        { "id": "tim-rhythmic", "label": "Even rhythm", "text": "Use an even repeatable rhythm with a clear beat to the thrusts or strokes, easing at the end rather than stopping abruptly." }
+      ]
+    },
+    {
+      "id": "lighting",
+      "label": "Lighting",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 60,
+      "options": [
+        { "id": "lit-lamp", "label": "Single warm lamp", "text": "A single warm lamp off to one side is the only light. Soft falloff, dark room behind, readable skin highlights and stable brightness." },
+        { "id": "lit-candle", "label": "Candlelight", "text": "Candlelight only: low warm flicker-free key from one side, deep soft shadows and a dark warm background." },
+        { "id": "lit-neon", "label": "Neon two-colour", "text": "Neon practical light in two contrasting colours, one per side, with coloured spill across the skin and a dark background." },
+        { "id": "lit-dawn", "label": "Cool dawn window", "text": "Cool early dawn light through a window, soft and low contrast, with gentle shadow edges and a pale background." },
+        { "id": "lit-blinds", "label": "Sun through blinds", "text": "Hard sunlight through slatted blinds, casting parallel stripes of light across the bodies that stay put as they move." },
+        { "id": "lit-fire", "label": "Firelight", "text": "Warm firelight from one side, flickering gently, deep shadows, glowing highlights on skin and a dark room." },
+        { "id": "lit-tv", "label": "TV glow", "text": "Cool flickering screen light from off camera, low and blue, with the bodies lit in a soft unstable glow from one side." },
+        { "id": "lit-silhouette", "label": "Hard backlight silhouette", "text": "A strong source directly behind the subjects turns them into near-silhouettes with a narrow glowing rim, keeping the background blown out." },
+        { "id": "lit-vanity", "label": "Bright vanity", "text": "Bright soft vanity light from the front and above, clean and even, with mirror catchlights and restrained contrast." }
+      ]
+    },
+    {
+      "id": "mood",
+      "label": "Expression & mood",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 110,
+      "options": [
+        { "id": "mood-flirty", "label": "Flirty", "text": "{A} keeps eye contact with the lens, smiling with a small bite of the lip and a raised brow, playful and inviting." },
+        { "id": "mood-needy", "label": "Needy", "text": "{A} looks desperate and eager: brows drawn, mouth open, small impatient huffs, hips chasing the contact." },
+        { "id": "mood-dominant", "label": "Dominant", "text": "{A} holds a steady level gaze, chin up, movements deliberate and controlled, taking what she wants." },
+        { "id": "mood-submissive", "label": "Submissive", "text": "{A} keeps her eyes down or up at her partner, soft mouth, body yielding and following the lead." },
+        { "id": "mood-blissful", "label": "Blissful", "text": "{A}'s eyes half close and roll, mouth falls open, brows lift and the whole face slackens with pleasure." },
+        { "id": "mood-teasing", "label": "Teasing", "text": "{A} smirks, slows the rhythm deliberately, holds eye contact and makes the partner wait." },
+        { "id": "mood-eye-contact", "label": "Eye contact with lens", "text": "{A} keeps her eyes locked on the lens almost the whole time, with natural blinks and small eye movements, breaking contact only to glance down at the action." }
+      ]
+    },
+    {
+      "id": "micro",
+      "label": "Small physical details",
+      "target": "detailed_description",
+      "multi": true,
+      "order": 120,
+      "options": [
+        { "id": "mic-jiggle", "label": "Jiggle physics", "text": "Breasts and ass bounce and settle with a soft heavy jiggle on every stroke, ripple and roll, and never stay still." },
+        { "id": "mic-sweat", "label": "Sweat sheen", "text": "A light sweat sheen builds and runs in thin lines on the chest, shoulders and back, catching the light." },
+        { "id": "mic-nipples", "label": "Hard nipples", "text": "Nipples are hard and clearly raised, moving with the breasts." },
+        { "id": "mic-wet-hair", "label": "Wet hair", "text": "Wet hair clings and swings in heavy clumps, moving with the head and settling slowly." },
+        { "id": "mic-ripple", "label": "Thrust ripple", "text": "Every thrust sends a visible ripple through the whole body, from hips to breasts to hair, arriving in that order." },
+        { "id": "mic-toes", "label": "Toes curl", "text": "Toes curl and flex with the rhythm wherever the feet are visible." },
+        { "id": "mic-grip", "label": "Hands grip and tighten", "text": "Hands grip the sheets, surface or partner and tighten with the rhythm, knuckles and fingers shifting under load." }
+      ]
+    },
+    {
+      "id": "voice",
+      "label": "Voice treatment",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 130,
+      "options": [
+        { "id": "voi-breathy", "label": "Breathy delivery", "text": "Deliver the words breathy and low, close to the microphone, with audible breaths between phrases." },
+        { "id": "voi-moaning", "label": "Moaning delivery", "text": "Deliver the words broken up by moans, stretching the vowels and letting the pitch rise with the rhythm." },
+        { "id": "voi-whisper", "label": "Close whisper", "text": "Deliver the words in a close whisper with the mouth near the lens." }
+      ]
+    },
+    {
+      "id": "arc",
+      "label": "Performance arc",
+      "target": "detailed_description",
+      "multi": false,
+      "order": 140,
+      "options": [
+        { "id": "arc-climax", "label": "Build to climax", "text": "Build steadily from slow and gentle to fast and hard, peaking near the end of the take with the strongest rhythm just before the final frame." },
+        { "id": "arc-edge", "label": "Edge then release", "text": "Build to the edge, slow right down, hold for a beat, then build again and release." },
+        { "id": "arc-even", "label": "Even rhythm throughout", "text": "Hold one even rhythm the whole way through with only small variations in force." }
+      ]
+    },
+    {
+      "id": "ambience",
+      "label": "Soundscape",
+      "target": "overall_soundscape",
+      "multi": false,
+      "order": 200,
+      "options": [
+        { "id": "amb-wet", "label": "Loud wet sounds", "text": "Loud close wet sounds: slick stroking, wet suction and soft squelch, matched to the visible contact and stopping when it stops." },
+        { "id": "amb-breath", "label": "Breath and gasps", "text": "Breathing dominates: quick shallow breaths, small gasps and low moans under everything else." },
+        { "id": "amb-slap", "label": "Skin slap and bed creak", "text": "Skin slapping on skin with each thrust, plus a bed creak and the soft slide of bodies." },
+        { "id": "amb-water", "label": "Water and wet skin", "text": "Water lapping and splashing, wet skin contact and a bright open-air ambience." },
+        { "id": "amb-oil", "label": "Oiled glide", "text": "A slick oiled glide with a soft sticky friction sound on each stroke." },
+        { "id": "amb-moan", "label": "Continuous moans", "text": "Continuous low moans and hums with the rhythm, rising and falling with the pace." }
+      ]
+    },
+    {
+      "id": "music",
+      "label": "Music",
+      "target": "non_diegetic_music",
+      "multi": false,
+      "order": 210,
+      "options": [
+        { "id": "mus-rnb", "label": "Slow R&B", "text": "A slow warm R&B instrumental with soft bass and brushed percussion, low under the sound, no vocals." },
+        { "id": "mus-lofi", "label": "Lo-fi", "text": "A relaxed lo-fi instrumental with a soft groove and muted keys, low and unobtrusive, no vocals." },
+        { "id": "mus-house", "label": "Deep house", "text": "An understated deep house bed with a steady pulse, soft percussion and restrained synth, no vocals." },
+        { "id": "mus-synth", "label": "Slow synthwave", "text": "A slow synthwave pad with a warm low end and a steady pulse, no vocals." },
+        { "id": "mus-jazz", "label": "Smoky jazz", "text": "Sparse smoky jazz, brushed drums and upright bass, loose and slow, no vocals." }
+      ]
+    },
+    {
+      "id": "nsfw-finish",
+      "label": "Finishing plan (editor)",
+      "target": "finishing_notes",
+      "multi": true,
+      "order": 220,
+      "options": [
+        { "id": "fin-loop", "label": "Make it loop", "text": "Finishing: join the end and start of this take on matching composition and movement phase to make a seamless loop." },
+        { "id": "fin-slowmo", "label": "Add slow motion", "text": "Finishing: slow a suitable section with a separate interpolation pass; keep the native-speed take clean." },
+        { "id": "fin-caption", "label": "Add captions or title", "text": "Finishing: add captions or a title from your exact wording; keep the native take free of burned-in text." },
+        { "id": "fin-music", "label": "Add your own music", "text": "Finishing: add your own licensed track and cut on the beat." }
+      ]
+    }
+  ]
+}
